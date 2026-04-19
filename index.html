@@ -5,33 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ingimar Helgason — Carpenter, Copenhagen</title>
   <meta name="description" content="Ingimar Helgason — Carpenter based in Copenhagen."/>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #111010;
-      --bg2: #191614;
-      --text: #EDEBE6;
-      --text-dim: #857E75;
-      --accent: #B8A89A;
-      --border: #2A2421;
+      --bg:       #F4EEE3;
+      --bg2:      #EDE7D9;
+      --text:     #1C1512;
+      --text-dim: #7A6F65;
+      --accent:   #B34D25;  /* 4.6:1 on --bg, passes WCAG AA */
+      --border:   #D9D0C3;
     }
 
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Newsreader', serif;
+      font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
       overflow-x: hidden;
     }
 
-    /* ── LANGUAGE SYSTEM ──────────────────────────────────────── */
-    [data-lang] { display: none !important; }
+    /* ── LANGUAGE SYSTEM ─────────────────────────────────────────── */
+    [data-lang]   { display: none !important; }
     :root[data-active-lang="en"] [data-lang="en"] { display: revert !important; }
     :root[data-active-lang="is"] [data-lang="is"] { display: revert !important; }
     :root[data-active-lang="da"] [data-lang="da"] { display: revert !important; }
-    a[data-lang] { display: none !important; }
+    a[data-lang]    { display: none !important; }
     :root[data-active-lang="en"] a[data-lang="en"] { display: inline !important; }
     :root[data-active-lang="is"] a[data-lang="is"] { display: inline !important; }
     :root[data-active-lang="da"] a[data-lang="da"] { display: inline !important; }
@@ -40,7 +40,7 @@
     :root[data-active-lang="is"] span[data-lang="is"] { display: inline !important; }
     :root[data-active-lang="da"] span[data-lang="da"] { display: inline !important; }
 
-    /* ── NAV ──────────────────────────────────────────────────── */
+    /* ── NAV ─────────────────────────────────────────────────────── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -48,15 +48,16 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.6rem 4rem;
-      background: rgba(17,16,16,0.92);
+      padding: 1.4rem 4rem;
+      background: rgba(244,238,227,0.93);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
     .nav-logo {
-      font-family: 'Newsreader', serif;
-      font-size: 1.05rem;
-      font-weight: 400;
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      font-variation-settings: 'opsz' 72, 'WONK' 0;
       color: var(--text);
       text-decoration: none;
       letter-spacing: 0.01em;
@@ -65,19 +66,20 @@
     .lang-btn {
       background: none;
       border: none;
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.65rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-dim);
       cursor: pointer;
-      padding: 0.3rem 0.6rem;
-      transition: color 0.2s;
+      padding: 0.3rem 0.55rem;
+      transition: color 0.15s;
+      font-weight: 500;
     }
     .lang-btn:hover { color: var(--text); }
     .lang-btn.active { color: var(--accent); }
     .lang-sep {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.5rem;
       color: var(--border);
       user-select: none;
@@ -101,7 +103,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(17,16,16,0.98);
+      background: rgba(244,238,227,0.98);
       z-index: 99;
       flex-direction: column;
       align-items: center;
@@ -123,72 +125,97 @@
     .nav-mobile .lang-btn { font-size: 1.3rem; letter-spacing: 0.04em; }
     .nav-mobile .lang-sep { display: none; }
 
-    /* ── CONTAINER ────────────────────────────────────────────── */
+    /* ── CONTAINER ───────────────────────────────────────────────── */
     .container {
       max-width: 1280px;
       margin: 0 auto;
       padding: 0 4rem;
     }
 
-    /* ── INTRO ────────────────────────────────────────────────── */
-    #intro { padding: 11rem 0 8rem; }
-    .intro-grid {
-      display: grid;
-      grid-template-columns: 240px 1fr;
-      gap: 5rem;
-      align-items: end;
-      animation: fadeUp 0.9s ease both;
-    }
-    .intro-portrait {
-      width: 240px;
-      height: 280px;
-      object-fit: cover;
-      object-position: center 10%;
-      display: block;
-    }
+    /* ── INTRO ───────────────────────────────────────────────────── */
+    #intro { padding: 5.5rem 0 2.5rem; }
+
     .intro-name {
-      font-family: 'Newsreader', serif;
-      font-size: clamp(2.4rem, 3.5vw, 3.8rem);
-      font-weight: 400;
-      line-height: 1.1;
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.6rem, 4vw, 4rem);
+      font-weight: 300;
+      font-variation-settings: 'opsz' 72, 'WONK' 0;
+      line-height: 1.05;
       color: var(--text);
-      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+      animation: fadeUp 0.5s ease both;
     }
+
+    .intro-lower {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      animation: fadeUp 0.5s 0.1s ease both;
+    }
+
     .intro-tagline {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-dim);
+      font-weight: 400;
     }
+
+    .intro-media {
+      display: flex;
+      gap: 6px;
+      align-items: stretch;
+      flex-shrink: 0;
+    }
+
+    .intro-portrait,
+    .intro-timelapse {
+      height: 150px;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      display: block;
+      object-fit: cover;
+    }
+    .intro-portrait {
+      width: 122px;
+      object-position: center 10%;
+    }
+    .intro-timelapse {
+      width: 160px;
+    }
+
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
+      from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── DIVIDER ──────────────────────────────────────────────── */
+    /* ── DIVIDER ─────────────────────────────────────────────────── */
     .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
-    /* ── SECTION LABEL ────────────────────────────────────────── */
+    /* ── SECTION LABEL ───────────────────────────────────────────── */
     .section-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.63rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.62rem;
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--accent);
+      font-weight: 500;
     }
 
-    /* ── WORK ─────────────────────────────────────────────────── */
+    /* ── WORK ────────────────────────────────────────────────────── */
     #work { padding: 0; }
-    .work-header { padding: 4rem 0 2.5rem; }
+    .work-header { padding: 2.5rem 0 1.5rem; }
 
     .work-item {
       display: grid;
       grid-template-columns: 1fr 1.65fr;
-      min-height: 560px;
+      min-height: 320px;
       border-top: 1px solid var(--border);
       cursor: pointer;
-      transition: border-color 0.4s;
+      transition: border-color 0.15s;
     }
     .work-item:last-child { border-bottom: 1px solid var(--border); }
     .work-item:hover { border-color: var(--accent); }
@@ -198,124 +225,122 @@
     .work-item.flip .work-img  { order: 1; }
 
     .work-meta {
-      padding: 3.5rem 4rem;
+      padding: 2rem 2.5rem;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
     }
-    .work-num {
-      font-family: 'Newsreader', serif;
-      font-size: 5rem;
-      line-height: 1;
-      color: rgba(237,235,230,0.04);
-      margin-bottom: auto;
-      user-select: none;
-      font-weight: 600;
-    }
+
     .work-title {
-      font-family: 'Newsreader', serif;
-      font-size: clamp(1.3rem, 1.8vw, 2rem);
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.1rem, 1.45vw, 1.6rem);
       font-weight: 400;
+      font-variation-settings: 'opsz' 20, 'WONK' 0;
       line-height: 1.25;
       color: var(--text);
-      margin-bottom: 0.6rem;
-      transition: color 0.25s;
+      margin-bottom: 0.4rem;
+      transition: color 0.15s;
     }
     .work-item:hover .work-title { color: var(--accent); }
+
     .work-cat {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.65rem;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-dim);
-      margin-bottom: 2.5rem;
+      font-weight: 400;
     }
-    .work-cue {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.63rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      opacity: 0;
-      transform: translateX(-8px);
-      transition: opacity 0.25s, transform 0.25s;
-      display: block;
-    }
-    .work-item:hover .work-cue { opacity: 1; transform: translateX(0); }
 
-    .work-img { overflow: hidden; }
+    .work-img {
+      overflow: hidden;
+      outline: 1px solid rgba(28,21,18,0.07);
+      outline-offset: -1px;
+    }
     .work-img img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.85s ease;
+      transition: transform 0.2s ease;
     }
-    .work-item:hover .work-img img { transform: scale(1.04); }
+    .work-item:hover .work-img img { transform: scale(1.03); }
 
-    /* ── ABOUT ────────────────────────────────────────────────── */
-    #about { padding: 8rem 0; }
-    .about-label { margin-bottom: 2rem; }
+    /* ── ABOUT ───────────────────────────────────────────────────── */
+    #about { padding: 4rem 0; }
+    .about-label { margin-bottom: 1.5rem; }
     .about-headline {
-      font-family: 'Newsreader', serif;
-      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.4rem);
       font-weight: 400;
-      line-height: 1.25;
+      font-variation-settings: 'opsz' 32, 'WONK' 0;
+      line-height: 1.2;
       color: var(--text);
-      max-width: 560px;
+      max-width: 520px;
     }
     .about-sub {
-      font-family: 'Newsreader', serif;
-      font-size: 1.05rem;
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
       font-style: italic;
+      font-variation-settings: 'opsz' 14;
       color: var(--text-dim);
-      margin-top: 1.5rem;
+      margin-top: 1rem;
     }
 
-    /* ── CONTACT ──────────────────────────────────────────────── */
-    #contact { padding: 8rem 0; }
-    .contact-label { margin-bottom: 2rem; }
+    /* ── CONTACT ─────────────────────────────────────────────────── */
+    #contact { padding: 4rem 0; }
+    .contact-label { margin-bottom: 1.5rem; }
     .contact-email {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: clamp(0.88rem, 1.5vw, 1.15rem);
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(0.88rem, 1.4vw, 1.1rem);
       color: var(--text);
       text-decoration: none;
-      letter-spacing: 0.03em;
-      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.01em;
+      border-bottom: 1.5px solid var(--border);
       padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s;
+      transition: color 0.15s, border-color 0.15s;
       display: inline-block;
     }
     .contact-email:hover { color: var(--accent); border-color: var(--accent); }
 
-    /* ── FOOTER ───────────────────────────────────────────────── */
+    /* ── FOOTER ──────────────────────────────────────────────────── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 2rem 4rem;
+      padding: 1.75rem 4rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     .footer-name {
-      font-family: 'Newsreader', serif;
-      font-size: 0.88rem;
+      font-family: 'Fraunces', serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      font-variation-settings: 'opsz' 14;
       color: var(--text-dim);
     }
     .footer-year {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.62rem;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       color: var(--text-dim);
     }
 
-    /* ── PROJECT OVERLAY ──────────────────────────────────────── */
+    /* ── PROJECT OVERLAY — rescope to dark ───────────────────────── */
     .proj-overlay {
+      --bg:       #111010;
+      --bg2:      #191614;
+      --text:     #EDEBE6;
+      --text-dim: #857E75;
+      --accent:   #B8A89A;
+      --border:   #2A2421;
+
       display: none;
       position: fixed;
       inset: 0;
       z-index: 200;
       background: rgba(17,16,16,0.98);
       overflow-y: auto;
+      color: #EDEBE6;
     }
     .proj-overlay.open { display: block; animation: overlayIn 0.3s ease both; }
     @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
@@ -345,7 +370,7 @@
     .proj-overlay-close:hover { border-color: var(--accent); color: var(--accent); }
 
     .proj-overlay-tag {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.65rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
@@ -353,10 +378,11 @@
       margin-bottom: 0.75rem;
     }
     .proj-overlay-title {
-      font-family: 'Newsreader', serif;
+      font-family: 'Fraunces', serif;
       font-size: clamp(2.4rem, 5vw, 5rem);
       font-weight: 400;
       font-style: italic;
+      font-variation-settings: 'opsz' 72;
       letter-spacing: -0.01em;
       line-height: 1.05;
       color: var(--text);
@@ -377,7 +403,7 @@
       margin-bottom: 4rem;
     }
     .proj-overlay-story h3 {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.62rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
@@ -385,8 +411,9 @@
       margin-bottom: 1.2rem;
     }
     .proj-overlay-story p {
-      font-family: 'Newsreader', serif;
+      font-family: 'Fraunces', serif;
       font-size: 1rem;
+      font-variation-settings: 'opsz' 14;
       color: var(--text-dim);
       line-height: 1.85;
       margin-bottom: 1rem;
@@ -394,7 +421,7 @@
     .proj-overlay-meta { display: flex; flex-direction: column; gap: 1.75rem; }
     .proj-meta-item strong {
       display: block;
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.58rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -403,14 +430,14 @@
       margin-bottom: 0.4rem;
     }
     .proj-meta-item span {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.73rem;
       color: var(--text);
       line-height: 1.65;
     }
     .proj-overlay-tags-list { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem; }
     .proj-tag {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.58rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -449,13 +476,13 @@
       background: rgba(17,16,16,0.35);
       border: none;
       cursor: pointer;
-      color: var(--text);
+      color: #EDEBE6;
       transition: background 0.2s;
     }
     .proj-video-play:hover { background: rgba(17,16,16,0.15); }
     .proj-video-play svg { width: 54px; height: 54px; opacity: 0.9; }
     .proj-video-caption {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.6rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -463,7 +490,7 @@
       margin-top: 0.75rem;
     }
 
-    /* ── LIGHTBOX ─────────────────────────────────────────────── */
+    /* ── LIGHTBOX ────────────────────────────────────────────────── */
     .lightbox {
       display: none;
       position: fixed;
@@ -480,33 +507,33 @@
       right: 1.5rem;
       background: none;
       border: none;
-      color: var(--text-dim);
+      color: #857E75;
       font-size: 1.2rem;
       cursor: pointer;
     }
     .lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; }
 
-    /* ── RESPONSIVE ───────────────────────────────────────────── */
+    /* ── RESPONSIVE ──────────────────────────────────────────────── */
     @media (max-width: 900px) {
-      nav { padding: 1.4rem 2rem; }
+      nav { padding: 1.3rem 2rem; }
       .container { padding: 0 2rem; }
       .lang-switcher { display: none; }
       .nav-hamburger { display: flex; }
-      footer { padding: 1.8rem 2rem; }
+      footer { padding: 1.6rem 2rem; }
 
-      #intro { padding: 8rem 0 5rem; }
-      .intro-grid { grid-template-columns: 1fr; gap: 2rem; align-items: start; }
-      .intro-portrait { width: 160px; height: 190px; }
+      #intro { padding: 5rem 0 2rem; }
+      .intro-lower { flex-direction: column-reverse; align-items: flex-start; gap: 1.25rem; }
+      .intro-portrait { width: 100px; height: 122px; }
+      .intro-timelapse { width: 134px; height: 122px; }
 
       .work-item { grid-template-columns: 1fr !important; min-height: auto; }
       .work-item.flip .work-meta { order: 0; }
       .work-item.flip .work-img  { order: 1; }
-      .work-meta { padding: 2.5rem 2rem; }
-      .work-img { height: 65vw; }
-      .work-cue { opacity: 1; transform: translateX(0); }
+      .work-meta { padding: 2rem 2rem; }
+      .work-img { height: 60vw; }
 
-      #about { padding: 5rem 0; }
-      #contact { padding: 5rem 0; }
+      #about { padding: 3rem 0; }
+      #contact { padding: 3rem 0; }
 
       .proj-overlay-inner { padding: 4rem 2rem 5rem; }
       .proj-overlay-body { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -518,6 +545,11 @@
       .proj-overlay-gallery { grid-template-columns: 1fr; }
       .proj-overlay-gallery .wide { grid-column: span 1; aspect-ratio: 4/3; }
       .proj-overlay-title { font-size: 2.2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .intro-timelapse { display: none; }
+      .intro-portrait { width: 122px; }
     }
   </style>
 </head>
@@ -550,13 +582,21 @@
 <!-- INTRO -->
 <section id="intro">
   <div class="container">
-    <div class="intro-grid">
-      <img class="intro-portrait" src="images/image_07.jpg" alt="Ingimar Helgason"/>
-      <div class="intro-text">
-        <h1 class="intro-name">Ingimar Helgason</h1>
-        <p class="intro-tagline" data-lang="en">Carpenter. Copenhagen.</p>
-        <p class="intro-tagline" data-lang="is">Húsasmiður. Kaupmannahöfn.</p>
-        <p class="intro-tagline" data-lang="da">Tømrer. København.</p>
+    <h1 class="intro-name">Ingimar Helgason</h1>
+    <div class="intro-lower">
+      <div>
+        <p class="intro-tagline" data-lang="en">Carpenter. Copenhagen. From Iceland.</p>
+        <p class="intro-tagline" data-lang="is">Húsasmiður. Kaupmannahöfn. Frá Íslandi.</p>
+        <p class="intro-tagline" data-lang="da">Tømrer. København. Fra Island.</p>
+      </div>
+      <div class="intro-media">
+        <img class="intro-portrait" src="images/image_07.jpg" alt="Ingimar Helgason" loading="eager"/>
+        <video class="intro-timelapse"
+          poster="images/bathroom-timelapse-poster.png"
+          muted loop playsinline
+          preload="auto">
+          <source src="images/bathroom-timelapse.mp4" type="video/mp4">
+        </video>
       </div>
     </div>
   </div>
@@ -578,34 +618,26 @@
   <div class="container">
     <div class="work-item" onclick="openProject('dirty-burger')">
       <div class="work-meta">
-        <div class="work-num">01</div>
         <h2 class="work-title">Dirty Burger &amp; Ribs — Fellsmúli</h2>
         <p class="work-cat" data-lang="en">Restaurant · 2023</p>
         <p class="work-cat" data-lang="is">Veitingastaður · 2023</p>
         <p class="work-cat" data-lang="da">Restaurant · 2023</p>
-        <p class="work-cue" data-lang="en">View project →</p>
-        <p class="work-cue" data-lang="is">Sjá verkefni →</p>
-        <p class="work-cue" data-lang="da">Se projekt →</p>
       </div>
-      <div class="work-img"><img src="images/image_16.jpg" alt="Dirty Burger &amp; Ribs"/></div>
+      <div class="work-img"><img src="images/image_16.jpg" alt="Dirty Burger &amp; Ribs" loading="lazy"/></div>
     </div>
   </div>
 
   <!-- 02 Cladding & Railing (flip) -->
   <div class="container">
     <div class="work-item flip" onclick="openProject('cladding-railing')">
-      <div class="work-img"><img src="images/image_03.jpg" alt="Cladding, New Windows &amp; Glass Railing"/></div>
+      <div class="work-img"><img src="images/image_03.jpg" alt="Cladding, New Windows &amp; Glass Railing" loading="lazy"/></div>
       <div class="work-meta">
-        <div class="work-num">02</div>
         <h2 class="work-title" data-lang="en">Cladding, New Windows &amp; Glass Railing</h2>
         <h2 class="work-title" data-lang="is">Klæðning, nýir gluggar og glerhandrið</h2>
         <h2 class="work-title" data-lang="da">Beklædning, nye vinduer og glasværn</h2>
         <p class="work-cat" data-lang="en">Residential · Exterior · 2023</p>
         <p class="work-cat" data-lang="is">Íbúðarhús · Utanhúsvinna · 2023</p>
         <p class="work-cat" data-lang="da">Bolig · Udvendig · 2023</p>
-        <p class="work-cue" data-lang="en">View project →</p>
-        <p class="work-cue" data-lang="is">Sjá verkefni →</p>
-        <p class="work-cue" data-lang="da">Se projekt →</p>
       </div>
     </div>
   </div>
@@ -614,36 +646,28 @@
   <div class="container">
     <div class="work-item" onclick="openProject('ulfarsardalur')">
       <div class="work-meta">
-        <div class="work-num">03</div>
         <h2 class="work-title" data-lang="en">Full Interior Fit-out — Úlfarsárdalur</h2>
         <h2 class="work-title" data-lang="is">Innanhúsfrágangur — Úlfarsárdalur</h2>
         <h2 class="work-title" data-lang="da">Komplet indvendig færdiggørelse — Úlfarsárdalur</h2>
         <p class="work-cat" data-lang="en">Residential · Interior · 2022</p>
         <p class="work-cat" data-lang="is">Íbúðarhús · Innanhúsvinna · 2022</p>
         <p class="work-cat" data-lang="da">Bolig · Indvendig · 2022</p>
-        <p class="work-cue" data-lang="en">View project →</p>
-        <p class="work-cue" data-lang="is">Sjá verkefni →</p>
-        <p class="work-cue" data-lang="da">Se projekt →</p>
       </div>
-      <div class="work-img"><img src="images/image_27.jpg" alt="Full Interior Fit-out — Úlfarsárdalur"/></div>
+      <div class="work-img"><img src="images/image_27.jpg" alt="Full Interior Fit-out — Úlfarsárdalur" loading="lazy"/></div>
     </div>
   </div>
 
   <!-- 04 Kópavogur (flip) -->
   <div class="container">
     <div class="work-item flip" onclick="openProject('kopavogur-cladding')">
-      <div class="work-img"><img src="images/Kopavogur_4.jpg" alt="Cladding — Kópavogur"/></div>
+      <div class="work-img"><img src="images/Kopavogur_4.jpg" alt="Cladding — Kópavogur" loading="lazy"/></div>
       <div class="work-meta">
-        <div class="work-num">04</div>
         <h2 class="work-title" data-lang="en">Cladding — Kópavogur</h2>
         <h2 class="work-title" data-lang="is">Utanhúsklæðning — Kópavogur</h2>
         <h2 class="work-title" data-lang="da">Beklædning — Kópavogur</h2>
         <p class="work-cat" data-lang="en">Residential · Exterior · 2018</p>
         <p class="work-cat" data-lang="is">Íbúðarhús · Utanhúsvinna · 2018</p>
         <p class="work-cat" data-lang="da">Bolig · Udvendig · 2018</p>
-        <p class="work-cue" data-lang="en">View project →</p>
-        <p class="work-cue" data-lang="is">Sjá verkefni →</p>
-        <p class="work-cue" data-lang="da">Se projekt →</p>
       </div>
     </div>
   </div>
@@ -652,18 +676,14 @@
   <div class="container">
     <div class="work-item" onclick="openProject('bathroom')">
       <div class="work-meta">
-        <div class="work-num">05</div>
         <h2 class="work-title" data-lang="en">Full Bathroom Renovation</h2>
         <h2 class="work-title" data-lang="is">Heildarendurbætur á baðherbergi</h2>
         <h2 class="work-title" data-lang="da">Komplet badeværelsesrenovering</h2>
         <p class="work-cat" data-lang="en">Residential · Bathroom</p>
         <p class="work-cat" data-lang="is">Íbúðarhús · Baðherbergi</p>
         <p class="work-cat" data-lang="da">Bolig · Badeværelse</p>
-        <p class="work-cue" data-lang="en">View project →</p>
-        <p class="work-cue" data-lang="is">Sjá verkefni →</p>
-        <p class="work-cue" data-lang="da">Se projekt →</p>
       </div>
-      <div class="work-img"><img src="images/image_06.jpg" alt="Full Bathroom Renovation"/></div>
+      <div class="work-img"><img src="images/image_06.jpg" alt="Full Bathroom Renovation" loading="lazy"/></div>
     </div>
   </div>
 </section>
@@ -1063,6 +1083,12 @@
   setLang(savedLang);
 
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Ambient timelapse in intro
+  var introTimelapse = document.querySelector('.intro-timelapse');
+  if (introTimelapse && !reducedMotion) {
+    introTimelapse.play().catch(function() {});
+  }
 
   // Project overlays
   function openProject(id) {
