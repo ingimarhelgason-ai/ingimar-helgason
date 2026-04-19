@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ingimar Helgason — Carpenter, Copenhagen</title>
+  <meta name="description" content="Ingimar Helgason — Carpenter based in Copenhagen."/>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400;1,6..72,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #111010;
+      --bg2: #191614;
+      --text: #EDEBE6;
+      --text-dim: #857E75;
+      --accent: #B8A89A;
+      --border: #2A2421;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Newsreader', serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── LANGUAGE SYSTEM ──────────────────────────────────────── */
+    [data-lang] { display: none !important; }
+    :root[data-active-lang="en"] [data-lang="en"] { display: revert !important; }
+    :root[data-active-lang="is"] [data-lang="is"] { display: revert !important; }
+    :root[data-active-lang="da"] [data-lang="da"] { display: revert !important; }
+    a[data-lang] { display: none !important; }
+    :root[data-active-lang="en"] a[data-lang="en"] { display: inline !important; }
+    :root[data-active-lang="is"] a[data-lang="is"] { display: inline !important; }
+    :root[data-active-lang="da"] a[data-lang="da"] { display: inline !important; }
+    span[data-lang] { display: none !important; }
+    :root[data-active-lang="en"] span[data-lang="en"] { display: inline !important; }
+    :root[data-active-lang="is"] span[data-lang="is"] { display: inline !important; }
+    :root[data-active-lang="da"] span[data-lang="da"] { display: inline !important; }
+
+    /* ── NAV ──────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.6rem 4rem;
+      background: rgba(17,16,16,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Newsreader', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+    .lang-switcher { display: flex; gap: 0; align-items: center; }
+    .lang-btn {
+      background: none;
+      border: none;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 0.3rem 0.6rem;
+      transition: color 0.2s;
+    }
+    .lang-btn:hover { color: var(--text); }
+    .lang-btn.active { color: var(--accent); }
+    .lang-sep {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.5rem;
+      color: var(--border);
+      user-select: none;
+    }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text-dim);
+    }
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(17,16,16,0.98);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile-close {
+      position: absolute;
+      top: 1.8rem;
+      right: 2rem;
+      font-size: 1.4rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .nav-mobile .lang-switcher { gap: 0.75rem; }
+    .nav-mobile .lang-btn { font-size: 1.3rem; letter-spacing: 0.04em; }
+    .nav-mobile .lang-sep { display: none; }
+
+    /* ── CONTAINER ────────────────────────────────────────────── */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 4rem;
+    }
+
+    /* ── INTRO ────────────────────────────────────────────────── */
+    #intro { padding: 11rem 0 8rem; }
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 5rem;
+      align-items: end;
+      animation: fadeUp 0.9s ease both;
+    }
+    .intro-portrait {
+      width: 240px;
+      height: 280px;
+      object-fit: cover;
+      object-position: center 10%;
+      display: block;
+    }
+    .intro-name {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(2.4rem, 3.5vw, 3.8rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .intro-tagline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── DIVIDER ──────────────────────────────────────────────── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* ── SECTION LABEL ────────────────────────────────────────── */
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.63rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ── WORK ─────────────────────────────────────────────────── */
+    #work { padding: 0; }
+    .work-header { padding: 4rem 0 2.5rem; }
+
+    .work-item {
+      display: grid;
+      grid-template-columns: 1fr 1.65fr;
+      min-height: 560px;
+      border-top: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.4s;
+    }
+    .work-item:last-child { border-bottom: 1px solid var(--border); }
+    .work-item:hover { border-color: var(--accent); }
+
+    .work-item.flip { grid-template-columns: 1.65fr 1fr; }
+    .work-item.flip .work-meta { order: 2; }
+    .work-item.flip .work-img  { order: 1; }
+
+    .work-meta {
+      padding: 3.5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .work-num {
+      font-family: 'Newsreader', serif;
+      font-size: 5rem;
+      line-height: 1;
+      color: rgba(237,235,230,0.04);
+      margin-bottom: auto;
+      user-select: none;
+      font-weight: 600;
+    }
+    .work-title {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(1.3rem, 1.8vw, 2rem);
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+      transition: color 0.25s;
+    }
+    .work-item:hover .work-title { color: var(--accent); }
+    .work-cat {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 2.5rem;
+    }
+    .work-cue {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.63rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 0.25s, transform 0.25s;
+      display: block;
+    }
+    .work-item:hover .work-cue { opacity: 1; transform: translateX(0); }
+
+    .work-img { overflow: hidden; }
+    .work-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.85s ease;
+    }
+    .work-item:hover .work-img img { transform: scale(1.04); }
+
+    /* ── ABOUT ────────────────────────────────────────────────── */
+    #about { padding: 8rem 0; }
+    .about-label { margin-bottom: 2rem; }
+    .about-headline {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--text);
+      max-width: 560px;
+    }
+    .about-sub {
+      font-family: 'Newsreader', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--text-dim);
+      margin-top: 1.5rem;
+    }
+
+    /* ── CONTACT ──────────────────────────────────────────────── */
+    #contact { padding: 8rem 0; }
+    .contact-label { margin-bottom: 2rem; }
+    .contact-email {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: clamp(0.88rem, 1.5vw, 1.15rem);
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+      display: inline-block;
+    }
+    .contact-email:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── FOOTER ───────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-name {
+      font-family: 'Newsreader', serif;
+      font-size: 0.88rem;
+      color: var(--text-dim);
+    }
+    .footer-year {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    /* ── PROJECT OVERLAY ──────────────────────────────────────── */
+    .proj-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(17,16,16,0.98);
+      overflow-y: auto;
+    }
+    .proj-overlay.open { display: block; animation: overlayIn 0.3s ease both; }
+    @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .proj-overlay-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 4rem 7rem;
+    }
+    .proj-overlay-close {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 1rem;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      z-index: 201;
+    }
+    .proj-overlay-close:hover { border-color: var(--accent); color: var(--accent); }
+
+    .proj-overlay-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .proj-overlay-title {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(2.4rem, 5vw, 5rem);
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: -0.01em;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 2.5rem;
+    }
+    .proj-overlay-hero {
+      width: 100%;
+      height: 55vh;
+      object-fit: cover;
+      display: block;
+      margin-bottom: 3rem;
+      border: 1px solid var(--border);
+    }
+    .proj-overlay-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      margin-bottom: 4rem;
+    }
+    .proj-overlay-story h3 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1.2rem;
+    }
+    .proj-overlay-story p {
+      font-family: 'Newsreader', serif;
+      font-size: 1rem;
+      color: var(--text-dim);
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+    .proj-overlay-meta { display: flex; flex-direction: column; gap: 1.75rem; }
+    .proj-meta-item strong {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+    .proj-meta-item span {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.73rem;
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .proj-overlay-tags-list { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem; }
+    .proj-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(184,168,154,0.3);
+      padding: 0.2rem 0.6rem;
+    }
+
+    .proj-overlay-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      margin-bottom: 4rem;
+    }
+    .proj-overlay-gallery img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.2s;
+      cursor: zoom-in;
+      border: 1px solid var(--border);
+    }
+    .proj-overlay-gallery img:hover { opacity: 0.72; }
+    .proj-overlay-gallery .wide { grid-column: span 2; aspect-ratio: 16/7; }
+
+    /* video */
+    .proj-overlay-video-wrap { position: relative; margin-bottom: 3rem; }
+    .proj-overlay-video-wrap .proj-overlay-hero { margin-bottom: 0; }
+    .proj-video-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(17,16,16,0.35);
+      border: none;
+      cursor: pointer;
+      color: var(--text);
+      transition: background 0.2s;
+    }
+    .proj-video-play:hover { background: rgba(17,16,16,0.15); }
+    .proj-video-play svg { width: 54px; height: 54px; opacity: 0.9; }
+    .proj-video-caption {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-top: 0.75rem;
+    }
+
+    /* ── LIGHTBOX ─────────────────────────────────────────────── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(8,8,8,0.97);
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; }
+
+    /* ── RESPONSIVE ───────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1.4rem 2rem; }
+      .container { padding: 0 2rem; }
+      .lang-switcher { display: none; }
+      .nav-hamburger { display: flex; }
+      footer { padding: 1.8rem 2rem; }
+
+      #intro { padding: 8rem 0 5rem; }
+      .intro-grid { grid-template-columns: 1fr; gap: 2rem; align-items: start; }
+      .intro-portrait { width: 160px; height: 190px; }
+
+      .work-item { grid-template-columns: 1fr !important; min-height: auto; }
+      .work-item.flip .work-meta { order: 0; }
+      .work-item.flip .work-img  { order: 1; }
+      .work-meta { padding: 2.5rem 2rem; }
+      .work-img { height: 65vw; }
+      .work-cue { opacity: 1; transform: translateX(0); }
+
+      #about { padding: 5rem 0; }
+      #contact { padding: 5rem 0; }
+
+      .proj-overlay-inner { padding: 4rem 2rem 5rem; }
+      .proj-overlay-body { grid-template-columns: 1fr; gap: 2.5rem; }
+      .proj-overlay-gallery { grid-template-columns: 1fr 1fr; }
+      .proj-overlay-gallery .wide { grid-column: span 2; }
+      .proj-overlay-hero { height: 45vw; min-height: 200px; }
+    }
+    @media (max-width: 560px) {
+      .proj-overlay-gallery { grid-template-columns: 1fr; }
+      .proj-overlay-gallery .wide { grid-column: span 1; aspect-ratio: 4/3; }
+      .proj-overlay-title { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#intro">Ingimar Helgason</a>
+  <div class="lang-switcher">
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <span class="lang-sep">·</span>
+    <button class="lang-btn" onclick="setLang('is')">IS</button>
+    <span class="lang-sep">·</span>
+    <button class="lang-btn" onclick="setLang('da')">DA</button>
+  </div>
+  <button class="nav-hamburger" onclick="document.getElementById('mobileNav').classList.add('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="mobileNav">
+  <button class="nav-mobile-close" onclick="document.getElementById('mobileNav').classList.remove('open')">✕</button>
+  <div class="lang-switcher">
+    <button class="lang-btn" onclick="setLang('en');document.getElementById('mobileNav').classList.remove('open')">EN</button>
+    <button class="lang-btn" onclick="setLang('is');document.getElementById('mobileNav').classList.remove('open')">IS</button>
+    <button class="lang-btn" onclick="setLang('da');document.getElementById('mobileNav').classList.remove('open')">DA</button>
+  </div>
+</div>
+
+<!-- INTRO -->
+<section id="intro">
+  <div class="container">
+    <div class="intro-grid">
+      <img class="intro-portrait" src="images/image_07.jpg" alt="Ingimar Helgason"/>
+      <div class="intro-text">
+        <h1 class="intro-name">Ingimar Helgason</h1>
+        <p class="intro-tagline" data-lang="en">Carpenter. Copenhagen.</p>
+        <p class="intro-tagline" data-lang="is">Húsasmiður. Kaupmannahöfn.</p>
+        <p class="intro-tagline" data-lang="da">Tømrer. København.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- WORK -->
+<section id="work">
+  <div class="container">
+    <div class="work-header">
+      <p class="section-label" data-lang="en">Work</p>
+      <p class="section-label" data-lang="is">Verk</p>
+      <p class="section-label" data-lang="da">Arbejde</p>
+    </div>
+  </div>
+
+  <!-- 01 Dirty Burger -->
+  <div class="container">
+    <div class="work-item" onclick="openProject('dirty-burger')">
+      <div class="work-meta">
+        <div class="work-num">01</div>
+        <h2 class="work-title">Dirty Burger &amp; Ribs — Fellsmúli</h2>
+        <p class="work-cat" data-lang="en">Restaurant · 2023</p>
+        <p class="work-cat" data-lang="is">Veitingastaður · 2023</p>
+        <p class="work-cat" data-lang="da">Restaurant · 2023</p>
+        <p class="work-cue" data-lang="en">View project →</p>
+        <p class="work-cue" data-lang="is">Sjá verkefni →</p>
+        <p class="work-cue" data-lang="da">Se projekt →</p>
+      </div>
+      <div class="work-img"><img src="images/image_16.jpg" alt="Dirty Burger &amp; Ribs"/></div>
+    </div>
+  </div>
+
+  <!-- 02 Cladding & Railing (flip) -->
+  <div class="container">
+    <div class="work-item flip" onclick="openProject('cladding-railing')">
+      <div class="work-img"><img src="images/image_03.jpg" alt="Cladding, New Windows &amp; Glass Railing"/></div>
+      <div class="work-meta">
+        <div class="work-num">02</div>
+        <h2 class="work-title" data-lang="en">Cladding, New Windows &amp; Glass Railing</h2>
+        <h2 class="work-title" data-lang="is">Klæðning, nýir gluggar og glerhandrið</h2>
+        <h2 class="work-title" data-lang="da">Beklædning, nye vinduer og glasværn</h2>
+        <p class="work-cat" data-lang="en">Residential · Exterior · 2023</p>
+        <p class="work-cat" data-lang="is">Íbúðarhús · Utanhúsvinna · 2023</p>
+        <p class="work-cat" data-lang="da">Bolig · Udvendig · 2023</p>
+        <p class="work-cue" data-lang="en">View project →</p>
+        <p class="work-cue" data-lang="is">Sjá verkefni →</p>
+        <p class="work-cue" data-lang="da">Se projekt →</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 Úlfarsárdalur -->
+  <div class="container">
+    <div class="work-item" onclick="openProject('ulfarsardalur')">
+      <div class="work-meta">
+        <div class="work-num">03</div>
+        <h2 class="work-title" data-lang="en">Full Interior Fit-out — Úlfarsárdalur</h2>
+        <h2 class="work-title" data-lang="is">Innanhúsfrágangur — Úlfarsárdalur</h2>
+        <h2 class="work-title" data-lang="da">Komplet indvendig færdiggørelse — Úlfarsárdalur</h2>
+        <p class="work-cat" data-lang="en">Residential · Interior · 2022</p>
+        <p class="work-cat" data-lang="is">Íbúðarhús · Innanhúsvinna · 2022</p>
+        <p class="work-cat" data-lang="da">Bolig · Indvendig · 2022</p>
+        <p class="work-cue" data-lang="en">View project →</p>
+        <p class="work-cue" data-lang="is">Sjá verkefni →</p>
+        <p class="work-cue" data-lang="da">Se projekt →</p>
+      </div>
+      <div class="work-img"><img src="images/image_27.jpg" alt="Full Interior Fit-out — Úlfarsárdalur"/></div>
+    </div>
+  </div>
+
+  <!-- 04 Kópavogur (flip) -->
+  <div class="container">
+    <div class="work-item flip" onclick="openProject('kopavogur-cladding')">
+      <div class="work-img"><img src="images/Kopavogur_4.jpg" alt="Cladding — Kópavogur"/></div>
+      <div class="work-meta">
+        <div class="work-num">04</div>
+        <h2 class="work-title" data-lang="en">Cladding — Kópavogur</h2>
+        <h2 class="work-title" data-lang="is">Utanhúsklæðning — Kópavogur</h2>
+        <h2 class="work-title" data-lang="da">Beklædning — Kópavogur</h2>
+        <p class="work-cat" data-lang="en">Residential · Exterior · 2018</p>
+        <p class="work-cat" data-lang="is">Íbúðarhús · Utanhúsvinna · 2018</p>
+        <p class="work-cat" data-lang="da">Bolig · Udvendig · 2018</p>
+        <p class="work-cue" data-lang="en">View project →</p>
+        <p class="work-cue" data-lang="is">Sjá verkefni →</p>
+        <p class="work-cue" data-lang="da">Se projekt →</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 Bathroom -->
+  <div class="container">
+    <div class="work-item" onclick="openProject('bathroom')">
+      <div class="work-meta">
+        <div class="work-num">05</div>
+        <h2 class="work-title" data-lang="en">Full Bathroom Renovation</h2>
+        <h2 class="work-title" data-lang="is">Heildarendurbætur á baðherbergi</h2>
+        <h2 class="work-title" data-lang="da">Komplet badeværelsesrenovering</h2>
+        <p class="work-cat" data-lang="en">Residential · Bathroom</p>
+        <p class="work-cat" data-lang="is">Íbúðarhús · Baðherbergi</p>
+        <p class="work-cat" data-lang="da">Bolig · Badeværelse</p>
+        <p class="work-cue" data-lang="en">View project →</p>
+        <p class="work-cue" data-lang="is">Sjá verkefni →</p>
+        <p class="work-cue" data-lang="da">Se projekt →</p>
+      </div>
+      <div class="work-img"><img src="images/image_06.jpg" alt="Full Bathroom Renovation"/></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <p class="section-label about-label" data-lang="en">About</p>
+    <p class="section-label about-label" data-lang="is">Um mig</p>
+    <p class="section-label about-label" data-lang="da">Om mig</p>
+    <p class="about-headline" data-lang="en">Carpenter. Copenhagen. From Iceland.</p>
+    <p class="about-headline" data-lang="is">Húsasmiður. Kaupmannahöfn. Frá Íslandi.</p>
+    <p class="about-headline" data-lang="da">Tømrer. København. Fra Island.</p>
+    <p class="about-sub" data-lang="en">These are some of my projects.</p>
+    <p class="about-sub" data-lang="is">Þetta eru nokkur af verkefnum mínum.</p>
+    <p class="about-sub" data-lang="da">Dette er nogle af mine projekter.</p>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label contact-label" data-lang="en">Contact</p>
+    <p class="section-label contact-label" data-lang="is">Hafa samband</p>
+    <p class="section-label contact-label" data-lang="da">Kontakt</p>
+    <a class="contact-email" href="mailto:ingimarhelgason@gmail.com">ingimarhelgason@gmail.com</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Ingimar Helgason</span>
+  <span class="footer-year">© 2026</span>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PROJECT OVERLAYS
+═══════════════════════════════════════════════════════════════ -->
+
+<!-- OVERLAY: Dirty Burger & Ribs -->
+<div class="proj-overlay" id="overlay-dirty-burger">
+  <button class="proj-overlay-close" onclick="closeProject()">✕</button>
+  <div class="proj-overlay-inner">
+    <p class="proj-overlay-tag" data-lang="en">Restaurant · Full Renovation · 2023</p>
+    <p class="proj-overlay-tag" data-lang="is">Veitingastaður · Heildar Endurbætur · 2023</p>
+    <p class="proj-overlay-tag" data-lang="da">Restaurant · Fuld Renovering · 2023</p>
+    <h2 class="proj-overlay-title">Dirty Burger<br>&amp; Ribs —<br>Fellsmúli</h2>
+    <img class="proj-overlay-hero" src="images/image_09.jpg" alt="Dirty Burger &amp; Ribs — finished exterior"/>
+
+    <div class="proj-overlay-body">
+      <div class="proj-overlay-story">
+        <h3 data-lang="en">The Project</h3>
+        <h3 data-lang="is">Um verkefnið</h3>
+        <h3 data-lang="da">Om projektet</h3>
+
+        <p data-lang="en">This space previously housed an Aktu-Taktu restaurant. While the basic kitchen infrastructure was in place, the brief was to completely reinvent the brand's identity both inside and out.</p>
+        <p data-lang="is">Þetta húsnæði hýsti áður Aktu-Taktu. Þó að grunninnviðir eldhússins hafi verið til staðar var verkefnið að skapa algjörlega nýja ásýnd fyrir staðinn, bæði að innan sem utan.</p>
+        <p data-lang="da">Dette lokale husede tidligere en Aktu-Taktu restaurant. Selvom køkkenet var der, var opgaven at skabe en helt ny visuel identitet både inde og ude.</p>
+
+        <p data-lang="en">For the exterior, I stripped the original cladding and replaced it with acid-washed metal sheets, specially treated for a unique "burned" aesthetic. The result is a bold, industrial facade that stands out in the Reykjavík streetscape.</p>
+        <p data-lang="is">Að utan fjarlægði ég gömlu klæðninguna og setti upp sýruþvegnar málmplötur sem voru brenndar til að ná fram sérstöku útliti. Útkoman er djarft og iðnaðarlegt útlit sem vekur athygli.</p>
+        <p data-lang="da">Udvendigt fjernede jeg den gamle beklædning og monterede syrevaskede metalplader, behandlet for at give et unikt "brændt" look. Resultatet er en markant, industriel facade.</p>
+
+        <p data-lang="en">Internally, I took the space back to the bare walls — high-durability vinyl flooring, two complete bathrooms, and all tiling for the kitchen and service areas. The centerpiece is the custom service counter, clad in the same burned steel as the exterior. I worked closely with the interior designer and coordinated with plumbers and electricians throughout.</p>
+        <p data-lang="is">Að innan var allt rifið niður í veggi. Sterkt vínýlgólf, tvö baðherbergi og flísalögn í eldhúsi og við þjónustuborð. Þjónustuborðið er þungamiðja hönnunarinnar, klætt sama brennda stáli og útveggirnir. Ég unnum náið með innanhúshönnuði og samræmdum vinnu pípulagningamanna og rafvirkja.</p>
+        <p data-lang="da">Indvendigt ryddede jeg alt til de bare vægge — slidstærkt vinylgulv, to badeværelser og alt flisearbejde. Servicedisken er beklædt med det samme stål som facaden. Jeg samarbejdede tæt med indretningsarkitekten og koordinerede med VVS og elektrikere.</p>
+      </div>
+      <div class="proj-overlay-meta">
+        <div class="proj-meta-item">
+          <strong data-lang="en">Location</strong><strong data-lang="is">Staðsetning</strong><strong data-lang="da">Lokation</strong>
+          <span>Fellsmúli, Reykjavík</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Year</strong><strong data-lang="is">Ár</strong><strong data-lang="da">År</strong>
+          <span>2023</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Scope of Work</strong><strong data-lang="is">Umfang verks</strong><strong data-lang="da">Arbejdsomfang</strong>
+          <span data-lang="en">Exterior cladding · Windows &amp; doors · Vinyl flooring · 2 bathrooms · Tiling · Custom steel counter · Ceilings &amp; lighting · Interior fit-out</span>
+          <span data-lang="is">Utanhúsklæðning · Gluggar &amp; hurðir · Vínýlgólf · 2 baðherbergi · Flísalögn · Sérsmíðað þjónustuborð · Loft &amp; lýsing · Innanhússfrágangur</span>
+          <span data-lang="da">Facadebeklædning · Vinduer &amp; døre · Vinylgulve · 2 badeværelser · Flisearbejde · Specialbygget disk · Lofter &amp; belysning · Indvendig aptering</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Tags</strong><strong data-lang="is">Flokkar</strong><strong data-lang="da">Tags</strong>
+          <div class="proj-overlay-tags-list">
+            <span class="proj-tag" data-lang="en">Restaurant</span><span class="proj-tag" data-lang="is">Veitingastaður</span><span class="proj-tag" data-lang="da">Restaurant</span>
+            <span class="proj-tag" data-lang="en">Full Renovation</span><span class="proj-tag" data-lang="is">Heildar Endurbætur</span><span class="proj-tag" data-lang="da">Fuld Renovering</span>
+            <span class="proj-tag">Exterior Cladding</span>
+            <span class="proj-tag">Custom Metalwork</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-overlay-gallery">
+      <img src="images/image_10.jpg" alt="Before — original exterior" onclick="openLightbox(this.src)" class="wide"/>
+      <img src="images/image_11.jpg" alt="Exterior work in progress" onclick="openLightbox(this.src)"/>
+      <img src="images/image_12.jpg" alt="Cladding going up" onclick="openLightbox(this.src)"/>
+      <img src="images/image_13.jpg" alt="Under construction" onclick="openLightbox(this.src)"/>
+      <img src="images/image_14.jpg" alt="On the roof" onclick="openLightbox(this.src)"/>
+      <img src="images/image_15.jpg" alt="Window detail" onclick="openLightbox(this.src)"/>
+      <img src="images/image_16.jpg" alt="Service counter in progress" onclick="openLightbox(this.src)" class="wide"/>
+      <img src="images/image_17.jpg" alt="Counter detail — burned steel top" onclick="openLightbox(this.src)"/>
+      <img src="images/image_18.jpg" alt="Dining area taking shape" onclick="openLightbox(this.src)"/>
+      <img src="images/image_19.jpg" alt="Finished bench seating" onclick="openLightbox(this.src)" class="wide"/>
+      <img src="images/image_20.jpg" alt="Finished counter" onclick="openLightbox(this.src)"/>
+      <img src="images/image_21.jpg" alt="Custom steel bin unit" onclick="openLightbox(this.src)"/>
+    </div>
+  </div>
+</div>
+
+
+<!-- OVERLAY: Cladding, New Windows & Glass Railing -->
+<div class="proj-overlay" id="overlay-cladding-railing">
+  <button class="proj-overlay-close" onclick="closeProject()">✕</button>
+  <div class="proj-overlay-inner">
+    <p class="proj-overlay-tag" data-lang="en">Residential · Exterior Renovation · 2023</p>
+    <p class="proj-overlay-tag" data-lang="is">Íbúðarhús · Útveggjaendurbætur · 2023</p>
+    <p class="proj-overlay-tag" data-lang="da">Bolig · Udvendig Renovering · 2023</p>
+    <h2 class="proj-overlay-title" data-lang="en">Cladding,<br>New Windows<br>&amp; Glass Railing —</h2>
+    <h2 class="proj-overlay-title" data-lang="is">Klæðning,<br>nýir gluggar<br>og glerhandrið —</h2>
+    <h2 class="proj-overlay-title" data-lang="da">Beklædning,<br>nye vinduer<br>og glasværn —</h2>
+    <img class="proj-overlay-hero" src="images/Project_2_photo_3.jpg" alt="Finished exterior — aluminium cladding and glass railing"/>
+
+    <div class="proj-overlay-body">
+      <div class="proj-overlay-story">
+        <h3 data-lang="en">The Project</h3><h3 data-lang="is">Verkefnið</h3><h3 data-lang="da">Projektet</h3>
+
+        <p data-lang="en">The brief was to take a two-storey residential house and make it completely weatherproof — with zero maintenance required for decades to come. I covered the entire exterior in aluminium corrugated cladding (smábára) and laid new electrical wiring for outdoor lighting throughout.</p>
+        <p data-lang="is">Verkbeiðnin var að taka tveggja hæða íbúðarhús og gera það algjörlega veðurþétt — með engri viðhaldskröfu í áratugi. Ég klæddi alla útvegginn í bylgjublikkál (smábára) og lagði nýjar rafmagnslagnir fyrir útilýsingu um allt.</p>
+        <p data-lang="da">Opgaven var at gøre et toetageshus helt vejrbestandigt — uden vedligeholdelse i årtier. Jeg dækkede hele facaden med bølgeblik aluminium (smábára) og lagde ny elinstallation til udendørsbelysning.</p>
+
+        <p data-lang="en">Aluminium cladding is one of the most practical investments you can make on a house in Iceland. Once it's on, it's on — no painting, no patching, no upkeep. It handles the wind, the rain and the freeze-thaw cycles without complaint.</p>
+        <p data-lang="is">Álklæðning er ein hagnýtasta fjárfestingin sem þú getur gert á húsi á Íslandi. Þegar það er komið á, er það komið á — engin málning, engar viðgerðir, ekkert viðhald. Það þolir vindinn, rigningu og frostþýðulotur án kvarta.</p>
+        <p data-lang="da">Aluminiumsbeklædning er en af de mest praktiske investeringer på et hus på Island. Når den er på, er den på — ingen maling, ingen reparationer, ingen vedligeholdelse.</p>
+
+        <p data-lang="en">After the cladding, I installed the glass railing on the balcony — and during that process, the decision was made to extend it to the exterior stairs as well. It was the right call. Glass changes the space completely: light comes through, sight lines open up, the whole exterior feels bigger and more considered.</p>
+        <p data-lang="is">Eftir klæðninguna setti ég upp glerhandriðið á svölina — og í þeim ferli var tekin ákvörðun um að lengja það yfir á útitröppurnar líka. Það var rétt ákvörðun. Glerið breytir rýminu algerlega: ljós kemur í gegn, sjónlínur opnast, og allt útlítið finnst stærra.</p>
+        <p data-lang="da">Efter beklædningen installerede jeg glasrækværket på balkonen — og under den proces blev beslutningen truffet om at udvide det til trapperne. Det var det rigtige valg. Glas ændrer rummet fuldstændigt: lys kommer igennem, sigtelinjer åbner sig op.</p>
+      </div>
+      <div class="proj-overlay-meta">
+        <div class="proj-meta-item">
+          <strong data-lang="en">Location</strong><strong data-lang="is">Staðsetning</strong><strong data-lang="da">Lokation</strong>
+          <span>Reykjavík, Iceland</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Year</strong><strong data-lang="is">Ár</strong><strong data-lang="da">År</strong>
+          <span>2023</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Scope of Work</strong><strong data-lang="is">Umfang verks</strong><strong data-lang="da">Arbejdsomfang</strong>
+          <span data-lang="en">Full exterior aluminium cladding · New outdoor electrical · Glass balcony railing · Glass stair railing</span>
+          <span data-lang="is">Heildar útveggjaálklæðning · Nýjar útiraflagnir · Glerhandriði á svölum · Glerhandriði á tröppum</span>
+          <span data-lang="da">Fuld udvendig aluminiumsbeklædning · Ny udendørs elinstallation · Glasrækværk på balkon · Glasrækværk på trappe</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Tags</strong><strong data-lang="is">Flokkar</strong><strong data-lang="da">Tags</strong>
+          <div class="proj-overlay-tags-list">
+            <span class="proj-tag">Aluminium Cladding</span>
+            <span class="proj-tag">Smábára</span>
+            <span class="proj-tag" data-lang="en">Glass Railing</span><span class="proj-tag" data-lang="is">Glerhandriði</span><span class="proj-tag" data-lang="da">Glasrækværk</span>
+            <span class="proj-tag" data-lang="en">Outdoor Electrical</span><span class="proj-tag" data-lang="is">Útiraflagnir</span><span class="proj-tag" data-lang="da">Udendørs El</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-overlay-gallery">
+      <img src="images/Project_2_hero_shot.jpg" alt="Exterior overview" onclick="openLightbox(this.src)" class="wide"/>
+      <img src="images/Project_2_photo_1.jpg" alt="Cladding in progress" onclick="openLightbox(this.src)"/>
+      <img src="images/Projct_2_photo_2.jpg" alt="Glass railing installation" onclick="openLightbox(this.src)"/>
+      <img src="images/Project_2_photo_4.jpg" alt="Cladding detail" onclick="openLightbox(this.src)"/>
+      <img src="images/Project_2_photo_5.jpg" alt="Exterior overview during construction" onclick="openLightbox(this.src)"/>
+      <img src="images/Project_2_photo_6.jpg" alt="Finished exterior detail" onclick="openLightbox(this.src)"/>
+    </div>
+  </div>
+</div>
+
+
+<!-- OVERLAY: Full Interior Fit-out — Úlfarsárdalur -->
+<div class="proj-overlay" id="overlay-ulfarsardalur">
+  <button class="proj-overlay-close" onclick="closeProject()">✕</button>
+  <div class="proj-overlay-inner">
+    <p class="proj-overlay-tag" data-lang="en">Residential · Full Interior Renovation · 2022</p>
+    <p class="proj-overlay-tag" data-lang="is">Íbúðarhús · Heildar Innréttingar · 2022</p>
+    <p class="proj-overlay-tag" data-lang="da">Bolig · Fuld Indvendig Renovering · 2022</p>
+    <h2 class="proj-overlay-title" data-lang="en">Full Interior<br>Fit-out —<br>Úlfarsárdalur</h2>
+    <h2 class="proj-overlay-title" data-lang="is">Innanhúsfrágangur —<br>Úlfarsárdalur</h2>
+    <h2 class="proj-overlay-title" data-lang="da">Komplet indvendig<br>færdiggørelse —<br>Úlfarsárdalur</h2>
+    <img class="proj-overlay-hero" src="images/Gerdarbrunnur_Hero_shot_stofan.jpg" alt="Finished living room — Úlfarsárdalur"/>
+
+    <div class="proj-overlay-body">
+      <div class="proj-overlay-story">
+        <h3 data-lang="en">The Project</h3><h3 data-lang="is">Um verkefnið</h3><h3 data-lang="da">Om projektet</h3>
+
+        <p data-lang="en">This property had been divided into two separate rental units. The mandate was to reintegrate the spaces into a cohesive, high-end single-family home, starting from a total strip-out.</p>
+        <p data-lang="is">Þessu húsi hafði verið skipt upp í tvær leigueiningar. Verkefnið var að sameina rýmin aftur í vandað einbýlishús og hófst vinna á því að rífa allt út.</p>
+        <p data-lang="da">Denne ejendom var opdelt i to lejligheder. Opgaven var at sammenlægge dem til én eksklusiv bolig, hvilket krævede en total rydning.</p>
+
+        <p data-lang="en">After stripping the interior back to the structure, I reconfigured the entire layout — removing the apartment divisions and dismantling all outdated electrical and plumbing systems to create a blank canvas.</p>
+        <p data-lang="is">Eftir að hafa rifið allt út skipulagði ég rýmið upp á nýtt. Milliverggir voru fjarlægðir og öll lagnakerfi tekin út til að byrja með hreint borð.</p>
+        <p data-lang="da">Efter at have strippet huset til de bærende vægge ændrede jeg hele planløsningen — fjernede opdelingen og alle gamle installationer for at starte forfra.</p>
+
+        <p data-lang="en">I installed underfloor heating throughout and built custom stairs to link the levels. The project covered new electrical wiring, drywall framing, professional plastering, and high-quality painting across all surfaces — all in close collaboration with an interior designer.</p>
+        <p data-lang="is">Ég lagði gólfhita í allt húsið og smíðaði nýjan stiga. Verkið náði yfir raflagnir, gifsveggi, múrun og vandaða málningarvinnu á öllum flötum — í nánu samstarfi við innanhúshönnuð.</p>
+        <p data-lang="da">Jeg lagde gulvvarme i hele huset og byggede en ny trappe. Projektet dækkede el, gipsvægge, pudsning og malerarbejde — tæt sammenarbejde med en indretningsarkitekt.</p>
+      </div>
+      <div class="proj-overlay-meta">
+        <div class="proj-meta-item">
+          <strong data-lang="en">Location</strong><strong data-lang="is">Staðsetning</strong><strong data-lang="da">Lokation</strong>
+          <span>Úlfarsárdalur, Reykjavík</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Year</strong><strong data-lang="is">Ár</strong><strong data-lang="da">År</strong>
+          <span>2022</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Scope of Work</strong><strong data-lang="is">Umfang verks</strong><strong data-lang="da">Arbejdsomfang</strong>
+          <span data-lang="en">Full strip-out · New electrical · Underfloor heating · Custom stairs · Drywall &amp; framing · Plastering · Painting · Doors &amp; fit-out</span>
+          <span data-lang="is">Heildarrif · Nýjar raflagnir · Gólfhiti · Sérsmíðaður stigi · Gifsveggir · Múrun · Málun · Hurðir &amp; innréttingar</span>
+          <span data-lang="da">Total rydning · Ny el · Gulvvarme · Ny trappe · Gips &amp; tømrerarbejde · Pudsning · Maling · Døre &amp; aptering</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Tags</strong><strong data-lang="is">Flokkar</strong><strong data-lang="da">Tags</strong>
+          <div class="proj-overlay-tags-list">
+            <span class="proj-tag" data-lang="en">Full Renovation</span><span class="proj-tag" data-lang="is">Heildar Endurbætur</span><span class="proj-tag" data-lang="da">Fuld Renovering</span>
+            <span class="proj-tag" data-lang="en">Plastering &amp; Painting</span><span class="proj-tag" data-lang="is">Múrning &amp; Málning</span><span class="proj-tag" data-lang="da">Pudsning &amp; Maling</span>
+            <span class="proj-tag" data-lang="en">Floor Heating</span><span class="proj-tag" data-lang="is">Gólfhiti</span><span class="proj-tag" data-lang="da">Gulvvarme</span>
+            <span class="proj-tag" data-lang="en">Stairs &amp; Doors</span><span class="proj-tag" data-lang="is">Tröppur &amp; Hurðir</span><span class="proj-tag" data-lang="da">Trappe &amp; Døre</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-overlay-gallery">
+      <img src="images/image_23.jpg" alt="Before — living area stripped" onclick="openLightbox(this.src)" class="wide"/>
+      <img src="images/image_24.jpg" alt="Before — walls stripped back" onclick="openLightbox(this.src)"/>
+      <img src="images/image_25.jpg" alt="Underfloor heating installation" onclick="openLightbox(this.src)"/>
+      <img src="images/image_26.jpg" alt="New ceiling framing going in" onclick="openLightbox(this.src)"/>
+      <img src="images/image_27.jpg" alt="Ceiling boards and framing" onclick="openLightbox(this.src)"/>
+      <img src="images/image_28.jpg" alt="Work in progress — walls" onclick="openLightbox(this.src)"/>
+      <img src="images/image_30.jpg" alt="Boarding the walls" onclick="openLightbox(this.src)"/>
+      <img src="images/image_32.jpg" alt="Interior taking shape" onclick="openLightbox(this.src)"/>
+      <img src="images/image_33.jpg" alt="Nearly finished — open plan" onclick="openLightbox(this.src)" class="wide"/>
+      <img src="images/image_34.jpg" alt="Finished interior detail" onclick="openLightbox(this.src)"/>
+      <img src="images/image_35.jpg" alt="Final stages" onclick="openLightbox(this.src)"/>
+    </div>
+  </div>
+</div>
+
+
+<!-- OVERLAY: Cladding — Kópavogur -->
+<div class="proj-overlay" id="overlay-kopavogur-cladding">
+  <button class="proj-overlay-close" onclick="closeProject()">✕</button>
+  <div class="proj-overlay-inner">
+    <p class="proj-overlay-tag" data-lang="en">Residential · Exterior Cladding · 2018</p>
+    <p class="proj-overlay-tag" data-lang="is">Íbúðarhús · Útveggjaklæðning · 2018</p>
+    <p class="proj-overlay-tag" data-lang="da">Bolig · Udvendig Beklædning · 2018</p>
+    <h2 class="proj-overlay-title" data-lang="en">Cladding —<br>Kópavogur</h2>
+    <h2 class="proj-overlay-title" data-lang="is">Utanhúsklæðning —<br>Kópavogur</h2>
+    <h2 class="proj-overlay-title" data-lang="da">Beklædning —<br>Kópavogur</h2>
+    <img class="proj-overlay-hero" src="images/Kopavogur_2.jpg" alt="Dark aluminium cladding — Kópavogur"/>
+
+    <div class="proj-overlay-body">
+      <div class="proj-overlay-story">
+        <h3 data-lang="en">The Project</h3><h3 data-lang="is">Um verkefnið</h3><h3 data-lang="da">Om projektet</h3>
+
+        <p data-lang="en">Full exterior cladding on a residential house in Kópavogur — dark corrugated aluminium installed in winter 2018. The frame goes up first, then insulation is fitted between, and finally the cladding goes on — every panel tight, level and square.</p>
+        <p data-lang="is">Heildar álklæðning á íbúðarhúsi í Kópavogi. Dökk smábára sett upp af nákvæmni í krefjandi vetraraðstæðum. Grindin fer upp fyrst, svo er einangrað og að lokum er klæðningin sett á — þétt og rétt.</p>
+        <p data-lang="da">Fuld udvendig beklædning på et parcelhus i Kópavogur — mørkt bølgeblik aluminium monteret i vinteren 2018. Rammen sættes op først, derefter monteres isolering, og endelig monteres beklædningen — hvert panel stramt, vandret og i vatter.</p>
+
+        <p data-lang="en">Dark smábára is one of the most popular choices in Reykjavík right now, and it's easy to see why. It looks sharp, it's completely weatherproof, and once it's on it needs nothing from you. In many ways it's the classic Icelandic exterior — as much a part of the Reykjavík streetscape as colourful plaster houses are to Rome.</p>
+        <p data-lang="is">Dökk smábára er eitt af vinsælustu valkostunum í Reykjavík í dag. Hún lítur vel út, er fullkomlega veðurþétt og krefst einskis viðhalds. Að mörgu leyti er smábára klassíski íslenski útvegurinn — jafn stór hluti af götumyndinni og litrík múrhús eru í Róm.</p>
+        <p data-lang="da">Mørk smábára er et af de mest populære valg i Reykjavík. Det ser skarpt ud, er helt vejrbestandigt, og kræver intet vedligehold. På mange måder er smábára den klassiske islandske facade — ligesom farverige pudsede huse er en del af Roms gadebillede.</p>
+      </div>
+      <div class="proj-overlay-meta">
+        <div class="proj-meta-item">
+          <strong data-lang="en">Location</strong><strong data-lang="is">Staðsetning</strong><strong data-lang="da">Lokation</strong>
+          <span>Kópavogur, Iceland</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Year</strong><strong data-lang="is">Ár</strong><strong data-lang="da">År</strong>
+          <span>2018</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Scope of Work</strong><strong data-lang="is">Umfang verks</strong><strong data-lang="da">Arbejdsomfang</strong>
+          <span data-lang="en">Full exterior aluminium cladding · Insulation · Framing</span>
+          <span data-lang="is">Heildar útveggjaálklæðning · Einangrun · Grindverk</span>
+          <span data-lang="da">Fuld udvendig aluminiumsbeklædning · Isolering · Indramning</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Tags</strong><strong data-lang="is">Flokkar</strong><strong data-lang="da">Tags</strong>
+          <div class="proj-overlay-tags-list">
+            <span class="proj-tag">Aluminium Cladding</span>
+            <span class="proj-tag">Smábára</span>
+            <span class="proj-tag" data-lang="en">Winter Work</span><span class="proj-tag" data-lang="is">Vetrarvinna</span><span class="proj-tag" data-lang="da">Vinterarbejde</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-overlay-gallery">
+      <img src="images/Kopavogur_3.jpg" alt="Cladding in progress" onclick="openLightbox(this.src)" class="wide"/>
+      <img src="images/Kopavogur_1.jpg" alt="Night work on site" onclick="openLightbox(this.src)"/>
+    </div>
+  </div>
+</div>
+
+
+<!-- OVERLAY: Full Bathroom Renovation -->
+<div class="proj-overlay" id="overlay-bathroom">
+  <button class="proj-overlay-close" onclick="closeProject()">✕</button>
+  <div class="proj-overlay-inner">
+    <p class="proj-overlay-tag" data-lang="en">Residential · Bathroom · Full Renovation</p>
+    <p class="proj-overlay-tag" data-lang="is">Íbúðarhús · Baðherbergi · Heildarendurbætur</p>
+    <p class="proj-overlay-tag" data-lang="da">Bolig · Badeværelse · Komplet Renovering</p>
+    <h2 class="proj-overlay-title" data-lang="en">Full Bathroom<br>Renovation</h2>
+    <h2 class="proj-overlay-title" data-lang="is">Heildarendurbætur<br>á baðherbergi</h2>
+    <h2 class="proj-overlay-title" data-lang="da">Komplet<br>badeværelsesrenovering</h2>
+
+    <div class="proj-overlay-video-wrap">
+      <video
+        class="proj-overlay-hero"
+        poster="images/bathroom-timelapse-poster.png"
+        data-src="images/bathroom-timelapse.mp4"
+        muted
+        loop
+        playsinline
+        preload="metadata"
+      ></video>
+      <button class="proj-video-play" aria-label="Play timelapse video">
+        <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 3.5L14.5 9 5 14.5V3.5Z" fill="currentColor"/>
+        </svg>
+      </button>
+      <p class="proj-video-caption">
+        <span data-lang="en">Timelapse — Full Bathroom Renovation</span>
+        <span data-lang="is">Timelapse — Heildarendurbætur á baðherbergi</span>
+        <span data-lang="da">Timelapse — Komplet badeværelsesrenovering</span>
+      </p>
+    </div>
+
+    <div class="proj-overlay-body">
+      <div class="proj-overlay-story">
+        <h3 data-lang="en">The Project</h3><h3 data-lang="is">Um verkefnið</h3><h3 data-lang="da">Om projektet</h3>
+        <p data-lang="en">Total bathroom build from the studs up — plumbing, floor screeding, structural framing, and high-end tiling.</p>
+        <p data-lang="is">Baðherbergi tekið í gegn frá grunni — pípulagnir, gólffylling, smíði og vönduð flísalögn.</p>
+        <p data-lang="da">Total badeværelsesrenovering helt fra bunden — VVS, gulvafretning, opbygning og flisearbejde i høj kvalitet.</p>
+      </div>
+      <div class="proj-overlay-meta">
+        <div class="proj-meta-item">
+          <strong data-lang="en">Scope of Work</strong><strong data-lang="is">Umfang verks</strong><strong data-lang="da">Arbejdsomfang</strong>
+          <span data-lang="en">Plumbing · Floor screeding · Structural framing · Tiling</span>
+          <span data-lang="is">Pípulagnir · Gólffylling · Burðarvirki · Flísalögn</span>
+          <span data-lang="da">VVS · Gulvafretning · Opbygning · Flisearbejde</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Tags</strong><strong data-lang="is">Flokkar</strong><strong data-lang="da">Tags</strong>
+          <div class="proj-overlay-tags-list">
+            <span class="proj-tag">Plumbing</span>
+            <span class="proj-tag">Tiling</span>
+            <span class="proj-tag" data-lang="en">Full Renovation</span><span class="proj-tag" data-lang="is">Heildarendurbætur</span><span class="proj-tag" data-lang="da">Komplet Renovering</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proj-overlay-gallery">
+      <img src="images/image_06.jpg" alt="Finished bathroom" onclick="openLightbox(this.src)" class="wide"/>
+    </div>
+  </div>
+</div>
+
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close">✕</button>
+  <img id="lightbox-img" src="" alt=""/>
+</div>
+
+
+<script>
+  // Language switcher
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-active-lang', lang);
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'" + lang + "'"));
+    });
+    localStorage.setItem('ih-lang', lang);
+  }
+  var savedLang = localStorage.getItem('ih-lang') || 'en';
+  setLang(savedLang);
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Project overlays
+  function openProject(id) {
+    var overlay = document.getElementById('overlay-' + id);
+    if (!overlay) return;
+    overlay.classList.add('open');
+    overlay.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+    overlay.querySelectorAll('video[data-src]').forEach(function(video) {
+      if (!video.src && video.dataset.src) { video.src = video.dataset.src; }
+      var playBtn = video.parentElement.querySelector('.proj-video-play');
+      if (reducedMotion) {
+        if (playBtn && !playBtn._wired) {
+          playBtn.style.display = 'flex';
+          playBtn.addEventListener('click', function() { video.play(); playBtn.style.display = 'none'; });
+          playBtn._wired = true;
+        }
+      } else {
+        video.setAttribute('autoplay', '');
+        video.play().catch(function() {});
+        if (playBtn) playBtn.style.display = 'none';
+      }
+    });
+  }
+  function closeProject() {
+    document.querySelectorAll('.proj-overlay').forEach(function(o) {
+      o.classList.remove('open');
+      o.querySelectorAll('video').forEach(function(v) { v.pause(); v.currentTime = 0; });
+    });
+    document.body.style.overflow = '';
+  }
+
+  // Lightbox
+  function openLightbox(src) {
+    event.stopPropagation();
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+
+  // Keyboard
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeProject(); closeLightbox(); }
+  });
+</script>
+
+</body>
+</html>
