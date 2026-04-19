@@ -4,552 +4,225 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ingimar Helgason — Carpenter, Copenhagen</title>
-  <meta name="description" content="Ingimar Helgason — Carpenter based in Copenhagen."/>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet"/>
+  <meta name="description" content="Ingimar Helgason — Carpenter and project manager based in Copenhagen."/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:       #F4EEE3;
-      --bg2:      #EDE7D9;
-      --text:     #1C1512;
-      --text-dim: #7A6F65;
-      --accent:   #B34D25;  /* 4.6:1 on --bg, passes WCAG AA */
-      --border:   #D9D0C3;
+      --bg: #0e1117; --bg2: #161b27; --bg3: #1e2535; --border: #2a3347;
+      --teal: #00c9a7; --amber: #f59e0b; --purple: #818cf8; --coral: #fb7185;
+      --text: #e2e8f0; --text-dim: #64748b; --text-mid: #94a3b8;
     }
-
     html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
+    body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; font-weight: 400; }
 
-    /* ── LANGUAGE SYSTEM ─────────────────────────────────────────── */
-    [data-lang]   { display: none !important; }
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 4rem; background: rgba(14,17,23,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'IBM Plex Mono', monospace; font-size: 1rem; font-weight: 600; letter-spacing: 0.04em; color: var(--teal); text-decoration: none; }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-cta { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-mid); text-decoration: none; border: 1px solid var(--border); padding: 0.4rem 1.1rem; border-radius: 2px; transition: border-color 0.2s, color 0.2s; }
+    .nav-cta:hover { border-color: var(--amber); color: var(--amber); }
+    .lang-switcher { display: flex; gap: 0.25rem; align-items: center; }
+    .lang-btn { background: none; border: 1px solid var(--border); border-radius: 2px; color: var(--text-dim); font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.05em; padding: 0.25rem 0.5rem; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
+    .lang-btn:hover { border-color: var(--teal); color: var(--teal); }
+    .lang-btn.active { background: rgba(0,201,167,0.12); border-color: var(--teal); color: var(--teal); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--text); transition: all 0.3s; }
+    .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(14,17,23,0.98); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { font-family: 'IBM Plex Mono', monospace; font-size: 1.8rem; font-weight: 600; letter-spacing: 0.04em; color: var(--text); text-decoration: none; transition: color 0.2s; }
+    .nav-mobile a:hover { color: var(--amber); }
+    .nav-mobile-close { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 2rem; color: var(--text-mid); cursor: pointer; background: none; border: none; transition: color 0.2s; }
+    .nav-mobile-close:hover { color: var(--amber); }
+    .nav-mobile .lang-switcher { display: flex !important; gap: 1rem; margin-top: 0; }
+    .nav-mobile .lang-btn { font-size: 2rem; border: none; padding: 0.3rem; background: none; opacity: 0.45; }
+    .nav-mobile .lang-btn.active { opacity: 1; transform: scale(1.2); background: none; border: none; }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 7rem 4rem 4rem; position: relative; z-index: 2; }
+    .hero-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.5rem; animation: fadeUp 0.8s ease both; }
+    .hero-title { font-family: 'IBM Plex Mono', monospace; font-size: clamp(4.2rem, 8vw, 9rem); line-height: 1.0; letter-spacing: -0.03em; font-weight: 600; color: var(--text); animation: fadeUp 0.8s 0.1s ease both; }
+    .hero-title em { color: var(--teal); font-style: normal; }
+    .hero-amber { color: var(--amber); }
+    .hero-sub { font-family: 'IBM Plex Sans', sans-serif; margin-top: 1.8rem; max-width: 400px; color: var(--text-mid); font-size: 1rem; line-height: 1.75; font-weight: 300; animation: fadeUp 0.8s 0.2s ease both; }
+    .hero-buttons { margin-top: 2.2rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; animation: fadeUp 0.8s 0.3s ease both; }
+    .btn-primary { background: transparent; color: var(--teal); padding: 0.85rem 2.2rem; border: 1px solid var(--teal); border-radius: 2px; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s; display: inline-block; }
+    .btn-primary:hover { background: var(--amber); border-color: var(--amber); color: var(--bg); transform: translateY(-1px); }
+    .hero-right { position: relative; overflow: hidden; }
+    .hero-right img { width: 100%; height: 100%; object-fit: cover; object-position: center center; opacity: 0.5; animation: zoomIn 1.2s ease both; display: block; filter: saturate(0.7); }
+    .hero-right::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, var(--bg) 0%, rgba(14,17,23,0.25) 55%), linear-gradient(to top, var(--bg) 0%, transparent 30%); }
+    .hero-data { position: absolute; top: 5.5rem; left: 4rem; display: flex; align-items: center; gap: 0; animation: fadeUp 0.8s 0.05s ease both; }
+    .hero-data-item { display: flex; align-items: baseline; gap: 0.55rem; }
+    .hero-data-sep { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--border); margin: 0 1.2rem; }
+    .hero-data-num { font-family: 'IBM Plex Mono', monospace; font-size: 1.15rem; font-weight: 600; color: var(--amber); }
+    .hero-data-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); }
+
+    /* PROJECTS */
+    #projects { padding: 7rem 4rem; background: var(--bg); }
+    .proj-card { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg2); margin-bottom: 4px; overflow: hidden; border: 1px solid var(--border); transition: border-color 0.2s; cursor: pointer; }
+    .proj-card:hover { border-color: var(--amber); }
+    .proj-card--flip { grid-template-columns: 1fr 1fr; }
+    .proj-card--flip .proj-photo { order: 2; }
+    .proj-card--flip .proj-info { order: 1; }
+    .proj-photo { overflow: hidden; position: relative; }
+    .proj-photo::after { content: ''; position: absolute; inset: 0; background: rgba(14,17,23,0.2); pointer-events: none; }
+    .proj-photo img { width: 100%; height: 420px; object-fit: cover; display: block; transition: transform 0.6s; filter: saturate(0.8); }
+    .proj-card:hover .proj-photo img { transform: scale(1.04); }
+    .proj-info { padding: 3rem 3.5rem; display: flex; flex-direction: column; justify-content: center; }
+    .proj-num { font-family: 'IBM Plex Mono', monospace; font-size: 4.5rem; font-weight: 600; color: rgba(245,158,11,0.1); line-height: 1; margin-bottom: 0.4rem; }
+    .proj-cat { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 0.6rem; }
+    .proj-title { font-family: 'IBM Plex Mono', monospace; font-size: 1.55rem; font-weight: 600; letter-spacing: -0.01em; color: var(--text); line-height: 1.1; margin-bottom: 1.1rem; transition: color 0.2s; }
+    .proj-card:hover .proj-title { color: var(--amber); }
+    .proj-desc { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; color: var(--text-mid); line-height: 1.85; font-weight: 300; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.6rem; }
+    .proj-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25); padding: 0.25rem 0.65rem; border-radius: 2px; transition: color 0.2s, border-color 0.2s, background 0.2s; }
+    .proj-tag:hover { color: var(--coral); background: rgba(251,113,133,0.08); border-color: rgba(251,113,133,0.35); }
+    .proj-card .proj-info::after { content: 'View Project →'; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-top: 1.8rem; display: block; opacity: 0; transform: translateX(-6px); transition: opacity 0.2s, transform 0.2s; }
+    .proj-card:hover .proj-info::after { opacity: 1; transform: translateX(0); }
+
+    /* ABOUT */
+    #about { padding: 7rem 4rem; background: var(--bg2); }
+    .team-intro { font-family: 'IBM Plex Sans', sans-serif; max-width: 560px; color: var(--text-mid); font-size: 0.95rem; line-height: 1.8; font-weight: 300; margin-top: 1rem; margin-bottom: 3rem; }
+    .team-card { background: var(--bg3); overflow: hidden; display: grid; grid-template-columns: 220px 1fr; border: 1px solid var(--border); max-width: 680px; }
+    .team-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; min-height: 280px; filter: saturate(0.8); }
+    .team-info { padding: 2.2rem; display: flex; flex-direction: column; justify-content: center; }
+    .team-flag { font-size: 1.3rem; margin-bottom: 0.8rem; }
+    .team-name { font-family: 'IBM Plex Mono', monospace; font-size: 2rem; font-weight: 600; letter-spacing: 0.01em; color: var(--text); line-height: 1; }
+    .team-fullname { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.08em; margin-top: 0.25rem; margin-bottom: 0.8rem; }
+    .team-role { font-family: 'IBM Plex Mono', monospace; display: inline-block; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--purple); border: 1px solid rgba(129,140,248,0.35); padding: 0.3rem 0.8rem; border-radius: 2px; margin-bottom: 1.2rem; }
+    .team-bio { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.85rem; color: var(--text-mid); line-height: 1.75; font-weight: 300; }
+
+    /* CONTACT */
+    #contact { padding: 7rem 4rem; background: var(--bg); }
+    .contact-inner { max-width: 680px; }
+    .contact-inner h2 { font-family: 'IBM Plex Mono', monospace; font-size: clamp(2rem, 3.2vw, 3.2rem); font-weight: 600; color: var(--text); letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 1.5rem; }
+    .contact-inner p { font-family: 'IBM Plex Sans', sans-serif; color: var(--text-mid); font-size: 0.95rem; line-height: 1.8; font-weight: 300; max-width: 420px; margin-bottom: 2.5rem; }
+    .contact-detail { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+    .contact-detail-icon { width: 36px; height: 36px; background: rgba(0,201,167,0.1); border: 1px solid rgba(0,201,167,0.2); border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .contact-detail-text { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.9rem; color: var(--text-mid); }
+    .contact-detail-text strong { font-family: 'IBM Plex Mono', monospace; color: var(--teal); display: block; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.15rem; }
+    .contact-email-link { font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; color: var(--text-mid); text-decoration: none; transition: color 0.2s; }
+    .contact-email-link:hover { color: var(--teal); }
+    .contact-cta { margin-top: 2.5rem; }
+
+    /* FOOTER */
+    footer { padding: 2rem 4rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--bg); }
+    .footer-logo { font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.04em; color: var(--teal); }
+    .footer-slogan { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); }
+    .footer-copy { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: var(--text-dim); }
+
+    /* SHARED */
+    .section-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem; }
+    .section-title { font-family: 'IBM Plex Mono', monospace; font-size: clamp(2rem, 3.5vw, 3.5rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; color: var(--text); }
+    #projects .section-tag { color: var(--amber) !important; }
+    #about .section-tag { color: var(--purple) !important; }
+    #contact .section-tag { color: var(--teal) !important; }
+    #projects .section-title { font-size: clamp(3rem, 5.5vw, 6rem); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes zoomIn { from { transform: scale(1.06); } to { transform: scale(1); } }
+
+    /* LANGUAGE SYSTEM */
+    [data-lang] { display: none !important; }
     :root[data-active-lang="en"] [data-lang="en"] { display: revert !important; }
     :root[data-active-lang="is"] [data-lang="is"] { display: revert !important; }
     :root[data-active-lang="da"] [data-lang="da"] { display: revert !important; }
-    a[data-lang]    { display: none !important; }
-    :root[data-active-lang="en"] a[data-lang="en"] { display: inline !important; }
-    :root[data-active-lang="is"] a[data-lang="is"] { display: inline !important; }
-    :root[data-active-lang="da"] a[data-lang="da"] { display: inline !important; }
+    a[data-lang] { display: none !important; }
+    :root[data-active-lang="en"] a[data-lang="en"] { display: inline-block !important; }
+    :root[data-active-lang="is"] a[data-lang="is"] { display: inline-block !important; }
+    :root[data-active-lang="da"] a[data-lang="da"] { display: inline-block !important; }
+    strong[data-lang] { display: none !important; }
+    :root[data-active-lang="en"] strong[data-lang="en"] { display: block !important; }
+    :root[data-active-lang="is"] strong[data-lang="is"] { display: block !important; }
+    :root[data-active-lang="da"] strong[data-lang="da"] { display: block !important; }
     span[data-lang] { display: none !important; }
     :root[data-active-lang="en"] span[data-lang="en"] { display: inline !important; }
     :root[data-active-lang="is"] span[data-lang="is"] { display: inline !important; }
     :root[data-active-lang="da"] span[data-lang="da"] { display: inline !important; }
 
-    /* ── NAV ─────────────────────────────────────────────────────── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.4rem 4rem;
-      background: rgba(244,238,227,0.93);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: 'Fraunces', serif;
-      font-size: 1rem;
-      font-weight: 300;
-      font-variation-settings: 'opsz' 72, 'WONK' 0;
-      color: var(--text);
-      text-decoration: none;
-      letter-spacing: 0.01em;
-    }
-    .lang-switcher { display: flex; gap: 0; align-items: center; }
-    .lang-btn {
-      background: none;
-      border: none;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      cursor: pointer;
-      padding: 0.3rem 0.55rem;
-      transition: color 0.15s;
-      font-weight: 500;
-    }
-    .lang-btn:hover { color: var(--text); }
-    .lang-btn.active { color: var(--accent); }
-    .lang-sep {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.5rem;
-      color: var(--border);
-      user-select: none;
-    }
-    .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-      background: none;
-      border: none;
-    }
-    .nav-hamburger span {
-      display: block;
-      width: 22px;
-      height: 1.5px;
-      background: var(--text-dim);
-    }
-    .nav-mobile {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(244,238,227,0.98);
-      z-index: 99;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2.5rem;
-    }
-    .nav-mobile.open { display: flex; }
-    .nav-mobile-close {
-      position: absolute;
-      top: 1.8rem;
-      right: 2rem;
-      font-size: 1.4rem;
-      color: var(--text-dim);
-      cursor: pointer;
-      background: none;
-      border: none;
-    }
-    .nav-mobile .lang-switcher { gap: 0.75rem; }
-    .nav-mobile .lang-btn { font-size: 1.3rem; letter-spacing: 0.04em; }
-    .nav-mobile .lang-sep { display: none; }
-
-    /* ── CONTAINER ───────────────────────────────────────────────── */
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 4rem;
-    }
-
-    /* ── INTRO ───────────────────────────────────────────────────── */
-    #intro { padding: 5.5rem 0 2.5rem; }
-
-    .intro-name {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(2.6rem, 4vw, 4rem);
-      font-weight: 300;
-      font-variation-settings: 'opsz' 72, 'WONK' 0;
-      line-height: 1.05;
-      color: var(--text);
-      letter-spacing: -0.01em;
-      animation: fadeUp 0.5s ease both;
-    }
-
-    .intro-lower {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      margin-top: 1.5rem;
-      animation: fadeUp 0.5s 0.1s ease both;
-    }
-
-    .intro-tagline {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.78rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      font-weight: 400;
-    }
-
-    .intro-media {
-      display: flex;
-      gap: 6px;
-      align-items: stretch;
-      flex-shrink: 0;
-    }
-
-    .intro-portrait,
-    .intro-timelapse {
-      height: 150px;
-      border-radius: 2px;
-      border: 1px solid var(--border);
-      display: block;
-      object-fit: cover;
-    }
-    .intro-portrait {
-      width: 122px;
-      object-position: center 10%;
-    }
-    .intro-timelapse {
-      width: 160px;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── DIVIDER ─────────────────────────────────────────────────── */
-    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
-
-    /* ── SECTION LABEL ───────────────────────────────────────────── */
-    .section-label {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 500;
-    }
-
-    /* ── WORK ────────────────────────────────────────────────────── */
-    #work { padding: 0; }
-    .work-header { padding: 2.5rem 0 1.5rem; }
-
-    .work-item {
-      display: grid;
-      grid-template-columns: 1fr 1.65fr;
-      min-height: 320px;
-      border-top: 1px solid var(--border);
-      cursor: pointer;
-      transition: border-color 0.15s;
-    }
-    .work-item:last-child { border-bottom: 1px solid var(--border); }
-    .work-item:hover { border-color: var(--accent); }
-
-    .work-item.flip { grid-template-columns: 1.65fr 1fr; }
-    .work-item.flip .work-meta { order: 2; }
-    .work-item.flip .work-img  { order: 1; }
-
-    .work-meta {
-      padding: 2rem 2.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-
-    .work-title {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(1.1rem, 1.45vw, 1.6rem);
-      font-weight: 400;
-      font-variation-settings: 'opsz' 20, 'WONK' 0;
-      line-height: 1.25;
-      color: var(--text);
-      margin-bottom: 0.4rem;
-      transition: color 0.15s;
-    }
-    .work-item:hover .work-title { color: var(--accent); }
-
-    .work-cat {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      font-weight: 400;
-    }
-
-    .work-img {
-      overflow: hidden;
-      outline: 1px solid rgba(28,21,18,0.07);
-      outline-offset: -1px;
-    }
-    .work-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.2s ease;
-    }
-    .work-item:hover .work-img img { transform: scale(1.03); }
-
-    /* ── ABOUT ───────────────────────────────────────────────────── */
-    #about { padding: 4rem 0; }
-    .about-label { margin-bottom: 1.5rem; }
-    .about-headline {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(1.6rem, 2.5vw, 2.4rem);
-      font-weight: 400;
-      font-variation-settings: 'opsz' 32, 'WONK' 0;
-      line-height: 1.2;
-      color: var(--text);
-      max-width: 520px;
-    }
-    .about-sub {
-      font-family: 'Fraunces', serif;
-      font-size: 1rem;
-      font-style: italic;
-      font-variation-settings: 'opsz' 14;
-      color: var(--text-dim);
-      margin-top: 1rem;
-    }
-
-    /* ── CONTACT ─────────────────────────────────────────────────── */
-    #contact { padding: 4rem 0; }
-    .contact-label { margin-bottom: 1.5rem; }
-    .contact-email {
-      font-family: 'DM Sans', sans-serif;
-      font-size: clamp(0.88rem, 1.4vw, 1.1rem);
-      color: var(--text);
-      text-decoration: none;
-      letter-spacing: 0.01em;
-      border-bottom: 1.5px solid var(--border);
-      padding-bottom: 2px;
-      transition: color 0.15s, border-color 0.15s;
-      display: inline-block;
-    }
-    .contact-email:hover { color: var(--accent); border-color: var(--accent); }
-
-    /* ── FOOTER ──────────────────────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 1.75rem 4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .footer-name {
-      font-family: 'Fraunces', serif;
-      font-size: 0.85rem;
-      font-weight: 300;
-      font-variation-settings: 'opsz' 14;
-      color: var(--text-dim);
-    }
-    .footer-year {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-      color: var(--text-dim);
-    }
-
-    /* ── PROJECT OVERLAY — rescope to dark ───────────────────────── */
-    .proj-overlay {
-      --bg:       #111010;
-      --bg2:      #191614;
-      --text:     #EDEBE6;
-      --text-dim: #857E75;
-      --accent:   #B8A89A;
-      --border:   #2A2421;
-
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: rgba(17,16,16,0.98);
-      overflow-y: auto;
-      color: #EDEBE6;
-    }
-    .proj-overlay.open { display: block; animation: overlayIn 0.3s ease both; }
+    /* PROJECT OVERLAY */
+    .proj-overlay { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(8,10,15,0.98); overflow-y: auto; }
+    .proj-overlay.open { display: block; animation: overlayIn 0.35s ease both; }
     @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
-
-    .proj-overlay-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 5rem 4rem 7rem;
-    }
-    .proj-overlay-close {
-      position: fixed;
-      top: 2rem;
-      right: 2rem;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      font-size: 1rem;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
-      z-index: 201;
-    }
-    .proj-overlay-close:hover { border-color: var(--accent); color: var(--accent); }
-
-    .proj-overlay-tag {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
-    }
-    .proj-overlay-title {
-      font-family: 'Fraunces', serif;
-      font-size: clamp(2.4rem, 5vw, 5rem);
-      font-weight: 400;
-      font-style: italic;
-      font-variation-settings: 'opsz' 72;
-      letter-spacing: -0.01em;
-      line-height: 1.05;
-      color: var(--text);
-      margin-bottom: 2.5rem;
-    }
-    .proj-overlay-hero {
-      width: 100%;
-      height: 55vh;
-      object-fit: cover;
-      display: block;
-      margin-bottom: 3rem;
-      border: 1px solid var(--border);
-    }
-    .proj-overlay-body {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      margin-bottom: 4rem;
-    }
-    .proj-overlay-story h3 {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 1.2rem;
-    }
-    .proj-overlay-story p {
-      font-family: 'Fraunces', serif;
-      font-size: 1rem;
-      font-variation-settings: 'opsz' 14;
-      color: var(--text-dim);
-      line-height: 1.85;
-      margin-bottom: 1rem;
-    }
-    .proj-overlay-meta { display: flex; flex-direction: column; gap: 1.75rem; }
-    .proj-meta-item strong {
-      display: block;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.58rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      font-weight: 500;
-      margin-bottom: 0.4rem;
-    }
-    .proj-meta-item span {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.73rem;
-      color: var(--text);
-      line-height: 1.65;
-    }
-    .proj-overlay-tags-list { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem; }
-    .proj-tag {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.58rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      border: 1px solid rgba(184,168,154,0.3);
-      padding: 0.2rem 0.6rem;
-    }
-
-    .proj-overlay-gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
-      margin-bottom: 4rem;
-    }
-    .proj-overlay-gallery img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-      display: block;
-      transition: opacity 0.2s;
-      cursor: zoom-in;
-      border: 1px solid var(--border);
-    }
-    .proj-overlay-gallery img:hover { opacity: 0.72; }
+    .proj-overlay-inner { max-width: 1100px; margin: 0 auto; padding: 5rem 3rem 6rem; }
+    .proj-overlay-close { position: fixed; top: 2rem; right: 2rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 2px; color: var(--text-mid); font-size: 1.2rem; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.2s, color 0.2s; z-index: 201; }
+    .proj-overlay-close:hover { border-color: var(--purple); color: var(--purple); }
+    .proj-overlay-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.75rem; }
+    .proj-overlay-title { font-family: 'IBM Plex Mono', monospace; font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.02; color: var(--text); margin-bottom: 2.5rem; }
+    .proj-overlay-hero { width: 100%; height: 55vh; object-fit: cover; display: block; margin-bottom: 3rem; filter: saturate(0.8); border: 1px solid var(--border); }
+    .proj-overlay-body { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-bottom: 4rem; }
+    .proj-overlay-story h3 { font-family: 'IBM Plex Mono', monospace; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.04em; color: var(--text); margin-bottom: 1rem; }
+    .proj-overlay-story p { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.92rem; color: var(--text-mid); line-height: 1.85; font-weight: 300; margin-bottom: 1rem; }
+    .proj-overlay-meta { display: flex; flex-direction: column; gap: 1.5rem; }
+    .proj-meta-item strong { font-family: 'IBM Plex Mono', monospace; display: block; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.3rem; }
+    .proj-meta-item span { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.88rem; color: var(--text-mid); line-height: 1.6; }
+    .proj-overlay-tags-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .proj-overlay-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-bottom: 4rem; }
+    .proj-overlay-gallery img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: opacity 0.2s; cursor: zoom-in; filter: saturate(0.8); border: 1px solid var(--border); }
+    .proj-overlay-gallery img:hover { opacity: 0.7; }
     .proj-overlay-gallery .wide { grid-column: span 2; aspect-ratio: 16/7; }
-
-    /* video */
     .proj-overlay-video-wrap { position: relative; margin-bottom: 3rem; }
     .proj-overlay-video-wrap .proj-overlay-hero { margin-bottom: 0; }
-    .proj-video-play {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(17,16,16,0.35);
-      border: none;
-      cursor: pointer;
-      color: #EDEBE6;
-      transition: background 0.2s;
-    }
-    .proj-video-play:hover { background: rgba(17,16,16,0.15); }
-    .proj-video-play svg { width: 54px; height: 54px; opacity: 0.9; }
-    .proj-video-caption {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-top: 0.75rem;
-    }
+    .proj-video-caption { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-top: 0.5rem; }
+    .proj-video-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(14,17,23,0.72); border: 1px solid var(--border); border-radius: 50%; width: 4rem; height: 4rem; cursor: pointer; display: none; align-items: center; justify-content: center; color: var(--text); transition: background 0.2s, border-color 0.2s; }
+    .proj-video-play:hover { background: rgba(245,158,11,0.18); border-color: var(--amber); color: var(--amber); }
+    .proj-video-play svg { margin-left: 3px; }
 
-    /* ── LIGHTBOX ────────────────────────────────────────────────── */
-    .lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 300;
-      background: rgba(8,8,8,0.97);
-      align-items: center;
-      justify-content: center;
-    }
+    /* LIGHTBOX */
+    .lightbox { display: none; position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,0.97); align-items: center; justify-content: center; }
     .lightbox.open { display: flex; }
-    .lightbox-close {
-      position: absolute;
-      top: 1.5rem;
-      right: 1.5rem;
-      background: none;
-      border: none;
-      color: #857E75;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-    .lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+    .lightbox-close { position: fixed; top: 1.5rem; right: 1.5rem; color: var(--text-mid); font-size: 2rem; cursor: pointer; background: none; border: none; transition: color 0.2s; }
+    .lightbox-close:hover { color: var(--teal); }
 
-    /* ── RESPONSIVE ──────────────────────────────────────────────── */
-    @media (max-width: 900px) {
-      nav { padding: 1.3rem 2rem; }
-      .container { padding: 0 2rem; }
-      .lang-switcher { display: none; }
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-right .lang-switcher { display: none; }
       .nav-hamburger { display: flex; }
-      footer { padding: 1.6rem 2rem; }
 
-      #intro { padding: 5rem 0 2rem; }
-      .intro-lower { flex-direction: column-reverse; align-items: flex-start; gap: 1.25rem; }
-      .intro-portrait { width: 100px; height: 122px; }
-      .intro-timelapse { width: 134px; height: 122px; }
+      .hero { grid-template-columns: 1fr; grid-template-rows: 50vw auto; min-height: auto; padding-top: 60px; }
+      .hero-right { grid-row: 1; height: 56vw; min-height: 220px; }
+      .hero-right::after { background: linear-gradient(to top, var(--bg) 0%, transparent 50%); }
+      .hero-left { grid-row: 2; padding: 2rem 1.5rem 3rem; }
+      .hero-data { display: none; }
 
-      .work-item { grid-template-columns: 1fr !important; min-height: auto; }
-      .work-item.flip .work-meta { order: 0; }
-      .work-item.flip .work-img  { order: 1; }
-      .work-meta { padding: 2rem 2rem; }
-      .work-img { height: 60vw; }
+      .proj-card { grid-template-columns: 1fr; }
+      .proj-card--flip .proj-photo { order: 0; }
+      .proj-card--flip .proj-info { order: 1; }
+      .proj-photo img { height: 60vw; min-height: 220px; }
+      .proj-info { padding: 2rem 1.5rem; }
+      .proj-num { font-size: 3rem; }
+      .proj-title { font-size: 1.25rem; }
+      .proj-card .proj-info::after { opacity: 1; transform: translateX(0); }
 
-      #about { padding: 3rem 0; }
-      #contact { padding: 3rem 0; }
+      #projects, #about, #contact { padding: 4rem 1.5rem; }
 
-      .proj-overlay-inner { padding: 4rem 2rem 5rem; }
+      .team-card { grid-template-columns: 120px 1fr; }
+      .team-photo img { min-height: 160px; }
+      .team-info { padding: 1.5rem; }
+      .team-name { font-size: 1.5rem; }
+
+      .contact-inner h2 { font-size: 1.8rem; }
+
+      footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem 1.5rem; }
+
+      .proj-overlay-inner { padding: 4rem 1.5rem 5rem; }
       .proj-overlay-body { grid-template-columns: 1fr; gap: 2.5rem; }
       .proj-overlay-gallery { grid-template-columns: 1fr 1fr; }
       .proj-overlay-gallery .wide { grid-column: span 2; }
-      .proj-overlay-hero { height: 45vw; min-height: 200px; }
+      .proj-overlay-hero { height: 40vw; min-height: 220px; }
     }
-    @media (max-width: 560px) {
+    @media (max-width: 480px) {
       .proj-overlay-gallery { grid-template-columns: 1fr; }
       .proj-overlay-gallery .wide { grid-column: span 1; aspect-ratio: 4/3; }
-      .proj-overlay-title { font-size: 2.2rem; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .intro-timelapse { display: none; }
-      .intro-portrait { width: 122px; }
     }
   </style>
 </head>
@@ -557,170 +230,243 @@
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#intro">Ingimar Helgason</a>
-  <div class="lang-switcher">
-    <button class="lang-btn" onclick="setLang('en')">EN</button>
-    <span class="lang-sep">·</span>
-    <button class="lang-btn" onclick="setLang('is')">IS</button>
-    <span class="lang-sep">·</span>
-    <button class="lang-btn" onclick="setLang('da')">DA</button>
+  <a href="#" class="nav-logo">Ingimar Helgason</a>
+  <div class="nav-right">
+    <a href="#contact" class="nav-cta" data-lang="en">Get in Touch</a>
+    <a href="#contact" class="nav-cta" data-lang="is">Hafðu samband</a>
+    <a href="#contact" class="nav-cta" data-lang="da">Kontakt</a>
+    <div class="lang-switcher">
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('is')">IS</button>
+      <button class="lang-btn" onclick="setLang('da')">DA</button>
+    </div>
   </div>
-  <button class="nav-hamburger" onclick="document.getElementById('mobileNav').classList.add('open')" aria-label="Menu">
+  <button class="nav-hamburger" id="hamburgerBtn" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
 <div class="nav-mobile" id="mobileNav">
   <button class="nav-mobile-close" onclick="document.getElementById('mobileNav').classList.remove('open')">✕</button>
+  <a href="#projects" onclick="document.getElementById('mobileNav').classList.remove('open')" data-lang="en">Projects</a>
+  <a href="#projects" onclick="document.getElementById('mobileNav').classList.remove('open')" data-lang="is">Verkefni</a>
+  <a href="#projects" onclick="document.getElementById('mobileNav').classList.remove('open')" data-lang="da">Projekter</a>
+  <a href="#about" onclick="document.getElementById('mobileNav').classList.remove('open')" data-lang="en">About</a>
+  <a href="#about" onclick="document.getElementById('mobileNav').classList.remove('open')" data-lang="is">Um mig</a>
+  <a href="#about" onclick="document.getElementById('mobileNav').classList.remove('open')" data-lang="da">Om mig</a>
+  <a href="#contact" onclick="document.getElementById('mobileNav').classList.remove('open')" data-lang="en">Get in Touch</a>
+  <a href="#contact" onclick="document.getElementById('mobileNav').classList.remove('open')" data-lang="is">Hafðu samband</a>
+  <a href="#contact" onclick="document.getElementById('mobileNav').classList.remove('open')" data-lang="da">Kontakt</a>
   <div class="lang-switcher">
-    <button class="lang-btn" onclick="setLang('en');document.getElementById('mobileNav').classList.remove('open')">EN</button>
-    <button class="lang-btn" onclick="setLang('is');document.getElementById('mobileNav').classList.remove('open')">IS</button>
-    <button class="lang-btn" onclick="setLang('da');document.getElementById('mobileNav').classList.remove('open')">DA</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('is')">IS</button>
+    <button class="lang-btn" onclick="setLang('da')">DA</button>
   </div>
 </div>
 
-<!-- INTRO -->
-<section id="intro">
-  <div class="container">
-    <h1 class="intro-name">Ingimar Helgason</h1>
-    <div class="intro-lower">
-      <div>
-        <p class="intro-tagline" data-lang="en">Carpenter. Copenhagen. From Iceland.</p>
-        <p class="intro-tagline" data-lang="is">Húsasmiður. Kaupmannahöfn. Frá Íslandi.</p>
-        <p class="intro-tagline" data-lang="da">Tømrer. København. Fra Island.</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-data">
+      <div class="hero-data-item">
+        <span class="hero-data-num">8+</span>
+        <span class="hero-data-label" data-lang="en">Years Experience</span>
+        <span class="hero-data-label" data-lang="is">Ára reynsla</span>
+        <span class="hero-data-label" data-lang="da">Års erfaring</span>
       </div>
-      <div class="intro-media">
-        <img class="intro-portrait" src="images/image_07.jpg" alt="Ingimar Helgason" loading="eager"/>
-        <video class="intro-timelapse"
-          poster="images/bathroom-timelapse-poster.png"
-          muted loop playsinline
-          preload="auto">
-          <source src="images/bathroom-timelapse.mp4" type="video/mp4">
-        </video>
+      <span class="hero-data-sep">//</span>
+      <div class="hero-data-item">
+        <span class="hero-data-num">10+</span>
+        <span class="hero-data-label" data-lang="en">Projects Completed</span>
+        <span class="hero-data-label" data-lang="is">Unnin verkefni</span>
+        <span class="hero-data-label" data-lang="da">Afsluttede projekter</span>
       </div>
     </div>
+    <p class="hero-tag" data-lang="en">Carpenter &amp; Project Manager — Copenhagen</p>
+    <p class="hero-tag" data-lang="is">Húsasmiður &amp; Verkefnastjóri — Kaupmannahöfn</p>
+    <p class="hero-tag" data-lang="da">Tømrer &amp; Projektleder — København</p>
+    <h1 class="hero-title"><span class="hero-amber">Plan.</span><br><span class="hero-amber">Build.</span><br><em>Finish.</em></h1>
+    <p class="hero-sub" data-lang="en">Professional craftsmanship driven by quality and reliability. From small renovations to large-scale builds, I deliver results I'm proud to stand behind.</p>
+    <p class="hero-sub" data-lang="is">Fagmannlegt handverk þar sem gæði og áreiðanleiki eru í fyrirrúmi. Frá litlum viðgerðum yfir í stórar framkvæmdir — ég skil af mér vinnu sem ég er stolt af.</p>
+    <p class="hero-sub" data-lang="da">Professionelt håndværk drevet af kvalitet og pålidelighed. Fra mindre renoveringer til store byggeprojekter leverer jeg resultater, jeg er stolt af at stå bag.</p>
+    <div class="hero-buttons">
+      <a href="#projects" class="btn-primary" data-lang="en">View Projects</a>
+      <a href="#projects" class="btn-primary" data-lang="is">Skoða verkefni</a>
+      <a href="#projects" class="btn-primary" data-lang="da">Se projekter</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="images/image_09.jpg" alt="Dirty Burger &amp; Ribs — finished exterior"/>
   </div>
 </section>
 
-<hr class="divider"/>
+<!-- PROJECTS -->
+<section id="projects">
+  <div style="margin-bottom:3rem;">
+    <p class="section-tag" data-lang="en">Portfolio</p>
+    <p class="section-tag" data-lang="is">Verkefni</p>
+    <p class="section-tag" data-lang="da">Portefølje</p>
+    <h2 class="section-title" data-lang="en">These are my projects.</h2>
+    <h2 class="section-title" data-lang="is">Þetta eru verkefni mín.</h2>
+    <h2 class="section-title" data-lang="da">Dette er mine projekter.</h2>
+  </div>
 
-<!-- WORK -->
-<section id="work">
-  <div class="container">
-    <div class="work-header">
-      <p class="section-label" data-lang="en">Work</p>
-      <p class="section-label" data-lang="is">Verk</p>
-      <p class="section-label" data-lang="da">Arbejde</p>
+  <div class="proj-card" onclick="openProject('dirty-burger')">
+    <div class="proj-photo"><img src="images/image_16.jpg" alt="Dirty Burger &amp; Ribs" loading="lazy"/></div>
+    <div class="proj-info">
+      <div class="proj-num">01</div>
+      <p class="proj-cat" data-lang="en">Restaurant · 2023</p>
+      <p class="proj-cat" data-lang="is">Veitingastaður · 2023</p>
+      <p class="proj-cat" data-lang="da">Restaurant · 2023</p>
+      <h3 class="proj-title">Dirty Burger &amp; Ribs — Fellsmúli</h3>
+      <p class="proj-desc" data-lang="en">Full-scale interior and exterior renovation. New flooring, lighting, plumbing for two bathrooms, custom tiling, and a bespoke steel-clad service counter.</p>
+      <p class="proj-desc" data-lang="is">Alhliða endurbætur að innan sem utan. Ný gólfefni, lýsing, tvö baðherbergi, flísalögn og sérsmíðað þjónustuborð klætt stáli.</p>
+      <p class="proj-desc" data-lang="da">Totalrenovering indvendigt og udvendigt. Nye gulve, belysning, to nye badeværelser, flisearbejde og en specialfremstillet stålbeklædt servicedisk.</p>
+      <div class="proj-tags"><span class="proj-tag">Restaurant</span><span class="proj-tag">Full Renovation</span><span class="proj-tag">Subcontractor Management</span></div>
     </div>
   </div>
 
-  <!-- 01 Dirty Burger -->
-  <div class="container">
-    <div class="work-item" onclick="openProject('dirty-burger')">
-      <div class="work-meta">
-        <h2 class="work-title">Dirty Burger &amp; Ribs — Fellsmúli</h2>
-        <p class="work-cat" data-lang="en">Restaurant · 2023</p>
-        <p class="work-cat" data-lang="is">Veitingastaður · 2023</p>
-        <p class="work-cat" data-lang="da">Restaurant · 2023</p>
-      </div>
-      <div class="work-img"><img src="images/image_16.jpg" alt="Dirty Burger &amp; Ribs" loading="lazy"/></div>
+  <div class="proj-card proj-card--flip" onclick="openProject('cladding-railing')">
+    <div class="proj-photo"><img src="images/image_03.jpg" alt="Cladding, New Windows &amp; Glass Railing" loading="lazy"/></div>
+    <div class="proj-info">
+      <div class="proj-num">02</div>
+      <p class="proj-cat" data-lang="en">Residential · Exterior · 2023</p>
+      <p class="proj-cat" data-lang="is">Íbúðarhús · Utanhúsvinna · 2023</p>
+      <p class="proj-cat" data-lang="da">Bolig · Udvendig · 2023</p>
+      <h3 class="proj-title" data-lang="en">Cladding, New Windows &amp; Glass Railing</h3>
+      <h3 class="proj-title" data-lang="is">Klæðning, nýir gluggar og glerhandrið</h3>
+      <h3 class="proj-title" data-lang="da">Beklædning, nye vinduer og glasværn</h3>
+      <p class="proj-desc" data-lang="en">Full exterior overhaul of a two-storey residence. Corrugated aluminium cladding, window and door installation, and a modern glass balcony railing extended to the stairs.</p>
+      <p class="proj-desc" data-lang="is">Heildarútlitshönnun á tveggja hæða einbýlishúsi. Smábára, nýir gluggar og hurðir ásamt glerhandriði á svölum sem var framlengt yfir á útitröppur.</p>
+      <p class="proj-desc" data-lang="da">Komplet udvendig renovering af en to-etagers bolig. Bølgeblik aluminium, montering af vinduer og døre samt glasværn på balkon forlænget til trapperne.</p>
+      <div class="proj-tags"><span class="proj-tag">Corrugated Cladding</span><span class="proj-tag">Window Installation</span><span class="proj-tag">Glass Railing</span></div>
     </div>
   </div>
 
-  <!-- 02 Cladding & Railing (flip) -->
-  <div class="container">
-    <div class="work-item flip" onclick="openProject('cladding-railing')">
-      <div class="work-img"><img src="images/image_03.jpg" alt="Cladding, New Windows &amp; Glass Railing" loading="lazy"/></div>
-      <div class="work-meta">
-        <h2 class="work-title" data-lang="en">Cladding, New Windows &amp; Glass Railing</h2>
-        <h2 class="work-title" data-lang="is">Klæðning, nýir gluggar og glerhandrið</h2>
-        <h2 class="work-title" data-lang="da">Beklædning, nye vinduer og glasværn</h2>
-        <p class="work-cat" data-lang="en">Residential · Exterior · 2023</p>
-        <p class="work-cat" data-lang="is">Íbúðarhús · Utanhúsvinna · 2023</p>
-        <p class="work-cat" data-lang="da">Bolig · Udvendig · 2023</p>
-      </div>
+  <div class="proj-card" onclick="openProject('ulfarsardalur')">
+    <div class="proj-photo"><img src="images/image_27.jpg" alt="Full Interior Fit-out — Úlfarsárdalur" loading="lazy"/></div>
+    <div class="proj-info">
+      <div class="proj-num">03</div>
+      <p class="proj-cat" data-lang="en">Residential · Interior · 2022</p>
+      <p class="proj-cat" data-lang="is">Íbúðarhús · Innanhúsvinna · 2022</p>
+      <p class="proj-cat" data-lang="da">Bolig · Indvendig · 2022</p>
+      <h3 class="proj-title" data-lang="en">Full Interior Fit-out — Úlfarsárdalur</h3>
+      <h3 class="proj-title" data-lang="is">Innanhúsfrágangur — Úlfarsárdalur</h3>
+      <h3 class="proj-title" data-lang="da">Komplet indvendig færdiggørelse — Úlfarsárdalur</h3>
+      <p class="proj-desc" data-lang="en">Two rental units reintegrated into a single high-end home. Full strip-out, underfloor heating, custom stairs, plastering, painting, and all finish work.</p>
+      <p class="proj-desc" data-lang="is">Tvær leigueiningar sameinaðar í eitt vandað einbýlishús. Heildarrif, gólfhiti, sérsmíðaður stigi, múrun, málun og lokafrágangur.</p>
+      <p class="proj-desc" data-lang="da">To lejelejligheder lagt sammen til ét eksklusive hjem. Fuld rydning, gulvvarme, ny trappe, pudsning, maling og alt aptering.</p>
+      <div class="proj-tags"><span class="proj-tag">Plastering &amp; Painting</span><span class="proj-tag">Floor Heating</span><span class="proj-tag">Stairs &amp; Doors</span></div>
     </div>
   </div>
 
-  <!-- 03 Úlfarsárdalur -->
-  <div class="container">
-    <div class="work-item" onclick="openProject('ulfarsardalur')">
-      <div class="work-meta">
-        <h2 class="work-title" data-lang="en">Full Interior Fit-out — Úlfarsárdalur</h2>
-        <h2 class="work-title" data-lang="is">Innanhúsfrágangur — Úlfarsárdalur</h2>
-        <h2 class="work-title" data-lang="da">Komplet indvendig færdiggørelse — Úlfarsárdalur</h2>
-        <p class="work-cat" data-lang="en">Residential · Interior · 2022</p>
-        <p class="work-cat" data-lang="is">Íbúðarhús · Innanhúsvinna · 2022</p>
-        <p class="work-cat" data-lang="da">Bolig · Indvendig · 2022</p>
-      </div>
-      <div class="work-img"><img src="images/image_27.jpg" alt="Full Interior Fit-out — Úlfarsárdalur" loading="lazy"/></div>
+  <div class="proj-card proj-card--flip" onclick="openProject('kopavogur-cladding')">
+    <div class="proj-photo"><img src="images/Kopavogur_4.jpg" alt="Cladding — Kópavogur" loading="lazy"/></div>
+    <div class="proj-info">
+      <div class="proj-num">04</div>
+      <p class="proj-cat" data-lang="en">Residential · Exterior · 2018</p>
+      <p class="proj-cat" data-lang="is">Íbúðarhús · Utanhúsvinna · 2018</p>
+      <p class="proj-cat" data-lang="da">Bolig · Udvendig · 2018</p>
+      <h3 class="proj-title" data-lang="en">Cladding — Kópavogur</h3>
+      <h3 class="proj-title" data-lang="is">Utanhúsklæðning — Kópavogur</h3>
+      <h3 class="proj-title" data-lang="da">Beklædning — Kópavogur</h3>
+      <p class="proj-desc" data-lang="en">Full aluminium cladding project. Dark corrugated smábára installed with precision under challenging winter conditions.</p>
+      <p class="proj-desc" data-lang="is">Heildar álklæðning á íbúðarhúsi í Kópavogi. Dökk smábára sett upp af nákvæmni í krefjandi vetraraðstæðum.</p>
+      <p class="proj-desc" data-lang="da">Fuld aluminiumsbeklædning på bolig i Kópavogur. Mørk smábára monteret med præcision under vinterforhold.</p>
+      <div class="proj-tags"><span class="proj-tag">Corrugated Cladding</span><span class="proj-tag">Smábára</span><span class="proj-tag">Winter Work</span></div>
     </div>
   </div>
 
-  <!-- 04 Kópavogur (flip) -->
-  <div class="container">
-    <div class="work-item flip" onclick="openProject('kopavogur-cladding')">
-      <div class="work-img"><img src="images/Kopavogur_4.jpg" alt="Cladding — Kópavogur" loading="lazy"/></div>
-      <div class="work-meta">
-        <h2 class="work-title" data-lang="en">Cladding — Kópavogur</h2>
-        <h2 class="work-title" data-lang="is">Utanhúsklæðning — Kópavogur</h2>
-        <h2 class="work-title" data-lang="da">Beklædning — Kópavogur</h2>
-        <p class="work-cat" data-lang="en">Residential · Exterior · 2018</p>
-        <p class="work-cat" data-lang="is">Íbúðarhús · Utanhúsvinna · 2018</p>
-        <p class="work-cat" data-lang="da">Bolig · Udvendig · 2018</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 05 Bathroom -->
-  <div class="container">
-    <div class="work-item" onclick="openProject('bathroom')">
-      <div class="work-meta">
-        <h2 class="work-title" data-lang="en">Full Bathroom Renovation</h2>
-        <h2 class="work-title" data-lang="is">Heildarendurbætur á baðherbergi</h2>
-        <h2 class="work-title" data-lang="da">Komplet badeværelsesrenovering</h2>
-        <p class="work-cat" data-lang="en">Residential · Bathroom</p>
-        <p class="work-cat" data-lang="is">Íbúðarhús · Baðherbergi</p>
-        <p class="work-cat" data-lang="da">Bolig · Badeværelse</p>
-      </div>
-      <div class="work-img"><img src="images/image_06.jpg" alt="Full Bathroom Renovation" loading="lazy"/></div>
+  <div class="proj-card" onclick="openProject('bathroom')">
+    <div class="proj-photo"><img src="images/image_06.jpg" alt="Full Bathroom Renovation" loading="lazy"/></div>
+    <div class="proj-info">
+      <div class="proj-num">05</div>
+      <p class="proj-cat" data-lang="en">Residential · Bathroom · 2022</p>
+      <p class="proj-cat" data-lang="is">Íbúðarhús · Baðherbergi · 2022</p>
+      <p class="proj-cat" data-lang="da">Bolig · Badeværelse · 2022</p>
+      <h3 class="proj-title" data-lang="en">Full Bathroom Renovation</h3>
+      <h3 class="proj-title" data-lang="is">Heildarendurbætur á baðherbergi</h3>
+      <h3 class="proj-title" data-lang="da">Komplet badeværelsesrenovering</h3>
+      <p class="proj-desc" data-lang="en">Total bathroom build from the studs up — plumbing, floor screeding, structural framing, and high-end tiling.</p>
+      <p class="proj-desc" data-lang="is">Baðherbergi tekið í gegn frá grunni — pípulagnir, gólffylling, smíði og vönduð flísalögn.</p>
+      <p class="proj-desc" data-lang="da">Total badeværelsesrenovering helt fra bunden — VVS, gulvafretning, opbygning og flisearbejde i høj kvalitet.</p>
+      <div class="proj-tags"><span class="proj-tag">Plumbing</span><span class="proj-tag">Tiling</span><span class="proj-tag">Full Renovation</span></div>
     </div>
   </div>
 </section>
-
-<hr class="divider"/>
 
 <!-- ABOUT -->
 <section id="about">
-  <div class="container">
-    <p class="section-label about-label" data-lang="en">About</p>
-    <p class="section-label about-label" data-lang="is">Um mig</p>
-    <p class="section-label about-label" data-lang="da">Om mig</p>
-    <p class="about-headline" data-lang="en">Carpenter. Copenhagen. From Iceland.</p>
-    <p class="about-headline" data-lang="is">Húsasmiður. Kaupmannahöfn. Frá Íslandi.</p>
-    <p class="about-headline" data-lang="da">Tømrer. København. Fra Island.</p>
-    <p class="about-sub" data-lang="en">These are some of my projects.</p>
-    <p class="about-sub" data-lang="is">Þetta eru nokkur af verkefnum mínum.</p>
-    <p class="about-sub" data-lang="da">Dette er nogle af mine projekter.</p>
+  <div style="margin-bottom:2rem;">
+    <p class="section-tag" data-lang="en">About</p>
+    <p class="section-tag" data-lang="is">Um mig</p>
+    <p class="section-tag" data-lang="da">Om mig</p>
+    <h2 class="section-title" data-lang="en">Carpenter.<br>Copenhagen.</h2>
+    <h2 class="section-title" data-lang="is">Húsasmiður.<br>Kaupmannahöfn.</h2>
+    <h2 class="section-title" data-lang="da">Tømrer.<br>København.</h2>
+  </div>
+  <p class="team-intro" data-lang="en">From Iceland. These are some of my projects.</p>
+  <p class="team-intro" data-lang="is">Frá Íslandi. Þetta eru nokkur af verkefnum mínum.</p>
+  <p class="team-intro" data-lang="da">Fra Island. Dette er nogle af mine projekter.</p>
+  <div class="team-card">
+    <div class="team-photo"><img src="images/image_07.jpg" alt="Ingimar Helgason"/></div>
+    <div class="team-info">
+      <div class="team-flag">🇮🇸</div>
+      <h3 class="team-name">Ingi</h3>
+      <p class="team-fullname">Ingimar Helgason</p>
+      <span class="team-role" data-lang="en">Carpenter &amp; Project Manager</span>
+      <span class="team-role" data-lang="is">Húsasmiður &amp; Verkefnastjóri</span>
+      <span class="team-role" data-lang="da">Tømrer &amp; Projektleder</span>
+      <p class="team-bio" data-lang="en">I manage communication, estimation, and coordination across all trades. Every project is handled from first call to final handover — on time, on budget, and done right. I'm fluent in Icelandic, English, and Danish.</p>
+      <p class="team-bio" data-lang="is">Ég sé um samskipti, tilboðsgerð og samræmingu allra fagaðila. Hvert verkefni er í mínum höndum frá upphafi til lokafrágagns — á réttum tíma, innan fjárhagsáætlunar og vel unnið. Ég tala íslensku, ensku og dönsku.</p>
+      <p class="team-bio" data-lang="da">Jeg håndterer kommunikation, tilbud og koordinering af alle håndværkere. Hvert projekt følger jeg fra første samtale til aflevering — til tiden, inden for budgettet og ordentligt udført. Jeg taler islandsk, engelsk og dansk.</p>
+    </div>
   </div>
 </section>
 
-<hr class="divider"/>
-
 <!-- CONTACT -->
 <section id="contact">
-  <div class="container">
-    <p class="section-label contact-label" data-lang="en">Contact</p>
-    <p class="section-label contact-label" data-lang="is">Hafa samband</p>
-    <p class="section-label contact-label" data-lang="da">Kontakt</p>
-    <a class="contact-email" href="mailto:ingimarhelgason@gmail.com">ingimarhelgason@gmail.com</a>
+  <div class="contact-inner">
+    <p class="section-tag" data-lang="en">Get in Touch</p>
+    <p class="section-tag" data-lang="is">Hafðu samband</p>
+    <p class="section-tag" data-lang="da">Kontakt</p>
+    <h2 data-lang="en">Let's discuss<br>your project.</h2>
+    <h2 data-lang="is">Við getum rætt<br>verkefnið þitt.</h2>
+    <h2 data-lang="da">Lad os tale om<br>dit projekt.</h2>
+    <p data-lang="en">Send me a message and I'll get back to you.</p>
+    <p data-lang="is">Sendu mér skilaboð og ég svaraði eins fljótt og ég get.</p>
+    <p data-lang="da">Send mig en besked, så vender jeg tilbage hurtigst muligt.</p>
+    <div class="contact-detail">
+      <div class="contact-detail-icon">📍</div>
+      <div class="contact-detail-text">
+        <strong data-lang="en">Location</strong>
+        <strong data-lang="is">Staðsetning</strong>
+        <strong data-lang="da">Lokation</strong>
+        Copenhagen, Denmark
+      </div>
+    </div>
+    <div class="contact-detail">
+      <div class="contact-detail-icon">✉️</div>
+      <div class="contact-detail-text">
+        <strong data-lang="en">Email</strong>
+        <strong data-lang="is">Netfang</strong>
+        <strong data-lang="da">E-mail</strong>
+        <a class="contact-email-link" href="mailto:ingimarhelgason@gmail.com">ingimarhelgason@gmail.com</a>
+      </div>
+    </div>
+    <div class="contact-cta">
+      <a href="mailto:ingimarhelgason@gmail.com" class="btn-primary" data-lang="en">Get in Touch →</a>
+      <a href="mailto:ingimarhelgason@gmail.com" class="btn-primary" data-lang="is">Hafðu samband →</a>
+      <a href="mailto:ingimarhelgason@gmail.com" class="btn-primary" data-lang="da">Skriv til mig →</a>
+    </div>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <span class="footer-name">Ingimar Helgason</span>
-  <span class="footer-year">© 2026</span>
+  <div class="footer-logo">Ingimar Helgason</div>
+  <div class="footer-slogan">Plan · Build · Finish</div>
+  <p class="footer-copy">© 2026</p>
 </footer>
 
 
@@ -740,21 +486,22 @@
 
     <div class="proj-overlay-body">
       <div class="proj-overlay-story">
-        <h3 data-lang="en">The Project</h3>
-        <h3 data-lang="is">Um verkefnið</h3>
-        <h3 data-lang="da">Om projektet</h3>
-
-        <p data-lang="en">This space previously housed an Aktu-Taktu restaurant. While the basic kitchen infrastructure was in place, the brief was to completely reinvent the brand's identity both inside and out.</p>
+        <h3 data-lang="en">The Project</h3><h3 data-lang="is">Um verkefnið</h3><h3 data-lang="da">Om projektet</h3>
+        <p data-lang="en">This space was previously an Aktu-Taktu restaurant. While the basic kitchen infrastructure was there, the brief was to completely reinvent the brand's identity both inside and out.</p>
         <p data-lang="is">Þetta húsnæði hýsti áður Aktu-Taktu. Þó að grunninnviðir eldhússins hafi verið til staðar var verkefnið að skapa algjörlega nýja ásýnd fyrir staðinn, bæði að innan sem utan.</p>
         <p data-lang="da">Dette lokale husede tidligere en Aktu-Taktu restaurant. Selvom køkkenet var der, var opgaven at skabe en helt ny visuel identitet både inde og ude.</p>
 
-        <p data-lang="en">For the exterior, I stripped the original cladding and replaced it with acid-washed metal sheets, specially treated for a unique "burned" aesthetic. The result is a bold, industrial facade that stands out in the Reykjavík streetscape.</p>
-        <p data-lang="is">Að utan fjarlægði ég gömlu klæðninguna og setti upp sýruþvegnar málmplötur sem voru brenndar til að ná fram sérstöku útliti. Útkoman er djarft og iðnaðarlegt útlit sem vekur athygli.</p>
-        <p data-lang="da">Udvendigt fjernede jeg den gamle beklædning og monterede syrevaskede metalplader, behandlet for at give et unikt "brændt" look. Resultatet er en markant, industriel facade.</p>
+        <p data-lang="en">For the exterior, we stripped the original cladding and replaced it with acid-washed metal sheets, specially treated for a unique "burned" aesthetic. The result is a bold, industrial facade that stands out in the Reykjavík streetscape.</p>
+        <p data-lang="is">Að utan fjarlægðum við gömlu klæðninguna og settum upp sýruþvegnar málmplötur sem voru brenndar til að ná fram sérstöku útliti. Útkoman er djarft og iðnaðarlegt útlit sem vekur athygli.</p>
+        <p data-lang="da">Udvendigt fjernede vi den gamle beklædning og monterede syrevaskede metalplader, behandlet for at give et unikt "brændt" look. Resultatet er en markant, industriel facade.</p>
 
-        <p data-lang="en">Internally, I took the space back to the bare walls — high-durability vinyl flooring, two complete bathrooms, and all tiling for the kitchen and service areas. The centerpiece is the custom service counter, clad in the same burned steel as the exterior. I worked closely with the interior designer and coordinated with plumbers and electricians throughout.</p>
-        <p data-lang="is">Að innan var allt rifið niður í veggi. Sterkt vínýlgólf, tvö baðherbergi og flísalögn í eldhúsi og við þjónustuborð. Þjónustuborðið er þungamiðja hönnunarinnar, klætt sama brennda stáli og útveggirnir. Ég unnum náið með innanhúshönnuði og samræmdum vinnu pípulagningamanna og rafvirkja.</p>
-        <p data-lang="da">Indvendigt ryddede jeg alt til de bare vægge — slidstærkt vinylgulv, to badeværelser og alt flisearbejde. Servicedisken er beklædt med det samme stål som facaden. Jeg samarbejdede tæt med indretningsarkitekten og koordinerede med VVS og elektrikere.</p>
+        <p data-lang="en">Internally, we took the space back to the bare walls. We installed high-durability vinyl flooring, built two complete bathrooms, and handled all tiling for the kitchen and service areas.</p>
+        <p data-lang="is">Að innan var allt rifið niður í veggi. Við lögðum sterkt vínýlgólf, byggðum tvö baðherbergi og sáum um alla flísalögn í eldhúsi og við þjónustuborð.</p>
+        <p data-lang="da">Indvendigt ryddede vi alt til de bare vægge. Vi lagde slidstærkt vinylgulv, byggede to badeværelser og udførte alt flisearbejde i køkken og serviceområde.</p>
+
+        <p data-lang="en">The centerpiece is the custom service counter, clad in the same burned steel as the exterior. We worked closely with the interior designer and coordinated with plumbers and electricians to ensure a seamless execution.</p>
+        <p data-lang="is">Þjónustuborðið er þungamiðja hönnunarinnar, klætt sama brennda stáli og útveggirnir. Við unnum náið með innanhúshönnuði og samræmdum vinnu pípulagningamanna og rafvirkja.</p>
+        <p data-lang="da">Servicedisken er beklædt med det samme stål som facaden. Vi samarbejdede tæt med indretningsarkitekten og koordinerede med VVS og elektrikere for en problemfri udførelse.</p>
       </div>
       <div class="proj-overlay-meta">
         <div class="proj-meta-item">
@@ -772,11 +519,18 @@
           <span data-lang="da">Facadebeklædning · Vinduer &amp; døre · Vinylgulve · 2 badeværelser · Flisearbejde · Specialbygget disk · Lofter &amp; belysning · Indvendig aptering</span>
         </div>
         <div class="proj-meta-item">
+          <strong data-lang="en">Collaborators</strong><strong data-lang="is">Samstarfsaðilar</strong><strong data-lang="da">Samarbejdspartnere</strong>
+          <span data-lang="en">Interior Designer · Plumber · Electrician</span>
+          <span data-lang="is">Innanhúshönnuður · Pípulagningamaður · Rafvirki</span>
+          <span data-lang="da">Indretningsarkitekt · VVS-installatør · Elektriker</span>
+        </div>
+        <div class="proj-meta-item">
           <strong data-lang="en">Tags</strong><strong data-lang="is">Flokkar</strong><strong data-lang="da">Tags</strong>
           <div class="proj-overlay-tags-list">
             <span class="proj-tag" data-lang="en">Restaurant</span><span class="proj-tag" data-lang="is">Veitingastaður</span><span class="proj-tag" data-lang="da">Restaurant</span>
             <span class="proj-tag" data-lang="en">Full Renovation</span><span class="proj-tag" data-lang="is">Heildar Endurbætur</span><span class="proj-tag" data-lang="da">Fuld Renovering</span>
             <span class="proj-tag">Exterior Cladding</span>
+            <span class="proj-tag">Subcontractor Management</span>
             <span class="proj-tag">Custom Metalwork</span>
           </div>
         </div>
@@ -808,26 +562,25 @@
     <p class="proj-overlay-tag" data-lang="en">Residential · Exterior Renovation · 2023</p>
     <p class="proj-overlay-tag" data-lang="is">Íbúðarhús · Útveggjaendurbætur · 2023</p>
     <p class="proj-overlay-tag" data-lang="da">Bolig · Udvendig Renovering · 2023</p>
-    <h2 class="proj-overlay-title" data-lang="en">Cladding,<br>New Windows<br>&amp; Glass Railing —</h2>
-    <h2 class="proj-overlay-title" data-lang="is">Klæðning,<br>nýir gluggar<br>og glerhandrið —</h2>
-    <h2 class="proj-overlay-title" data-lang="da">Beklædning,<br>nye vinduer<br>og glasværn —</h2>
+    <h2 class="proj-overlay-title" data-lang="en">Cladding,<br>New Windows<br>&amp; Glass Railing</h2>
+    <h2 class="proj-overlay-title" data-lang="is">Klæðning,<br>nýir gluggar<br>og glerhandrið</h2>
+    <h2 class="proj-overlay-title" data-lang="da">Beklædning,<br>nye vinduer<br>og glasværn</h2>
     <img class="proj-overlay-hero" src="images/Project_2_photo_3.jpg" alt="Finished exterior — aluminium cladding and glass railing"/>
 
     <div class="proj-overlay-body">
       <div class="proj-overlay-story">
         <h3 data-lang="en">The Project</h3><h3 data-lang="is">Verkefnið</h3><h3 data-lang="da">Projektet</h3>
-
-        <p data-lang="en">The brief was to take a two-storey residential house and make it completely weatherproof — with zero maintenance required for decades to come. I covered the entire exterior in aluminium corrugated cladding (smábára) and laid new electrical wiring for outdoor lighting throughout.</p>
-        <p data-lang="is">Verkbeiðnin var að taka tveggja hæða íbúðarhús og gera það algjörlega veðurþétt — með engri viðhaldskröfu í áratugi. Ég klæddi alla útvegginn í bylgjublikkál (smábára) og lagði nýjar rafmagnslagnir fyrir útilýsingu um allt.</p>
-        <p data-lang="da">Opgaven var at gøre et toetageshus helt vejrbestandigt — uden vedligeholdelse i årtier. Jeg dækkede hele facaden med bølgeblik aluminium (smábára) og lagde ny elinstallation til udendørsbelysning.</p>
+        <p data-lang="en">The brief was to take a two-storey residential house and make it completely weatherproof — with zero maintenance required for decades to come. We covered the entire exterior in aluminium corrugated cladding (smábára) and laid new electrical wiring for outdoor lighting throughout.</p>
+        <p data-lang="is">Verkbeiðnin var að taka tveggja hæða íbúðarhús og gera það algjörlega veðurþétt — með engri viðhaldskröfu í áratugi. Við klæddum alla útvegginn í bylgjublikkál (smábára) og lögðum nýjar rafmagnslagnir fyrir útilýsingu um allt.</p>
+        <p data-lang="da">Opgaven var at gøre et toetageshus helt vejrbestandigt — uden vedligeholdelse i årtier frem. Vi dækkede hele facaden med bølgeblik aluminium (smábára) og lagde ny elinstallation til udendørsbelysning overalt.</p>
 
         <p data-lang="en">Aluminium cladding is one of the most practical investments you can make on a house in Iceland. Once it's on, it's on — no painting, no patching, no upkeep. It handles the wind, the rain and the freeze-thaw cycles without complaint.</p>
         <p data-lang="is">Álklæðning er ein hagnýtasta fjárfestingin sem þú getur gert á húsi á Íslandi. Þegar það er komið á, er það komið á — engin málning, engar viðgerðir, ekkert viðhald. Það þolir vindinn, rigningu og frostþýðulotur án kvarta.</p>
-        <p data-lang="da">Aluminiumsbeklædning er en af de mest praktiske investeringer på et hus på Island. Når den er på, er den på — ingen maling, ingen reparationer, ingen vedligeholdelse.</p>
+        <p data-lang="da">Aluminiumsbeklædning er en af de mest praktiske investeringer på et hus på Island. Når den er på, er den på — ingen maling, ingen reparationer, ingen vedligeholdelse. Den klarer vind, regn og frost uden klager.</p>
 
-        <p data-lang="en">After the cladding, I installed the glass railing on the balcony — and during that process, the decision was made to extend it to the exterior stairs as well. It was the right call. Glass changes the space completely: light comes through, sight lines open up, the whole exterior feels bigger and more considered.</p>
-        <p data-lang="is">Eftir klæðninguna setti ég upp glerhandriðið á svölina — og í þeim ferli var tekin ákvörðun um að lengja það yfir á útitröppurnar líka. Það var rétt ákvörðun. Glerið breytir rýminu algerlega: ljós kemur í gegn, sjónlínur opnast, og allt útlítið finnst stærra.</p>
-        <p data-lang="da">Efter beklædningen installerede jeg glasrækværket på balkonen — og under den proces blev beslutningen truffet om at udvide det til trapperne. Det var det rigtige valg. Glas ændrer rummet fuldstændigt: lys kommer igennem, sigtelinjer åbner sig op.</p>
+        <p data-lang="en">After the cladding, we installed the glass railing on the balcony — and during that process, the decision was made to extend it to the exterior stairs as well. It was the right call. Glass changes the space completely: light comes through, sight lines open up, the whole exterior feels bigger and more considered.</p>
+        <p data-lang="is">Eftir klæðninguna settum við upp glerhandriðið á svölina — og í þeim ferli var tekin ákvörðun um að lengja það yfir á útitröppurnar líka. Það var rétt ákvörðun. Glerið breytir rýminu algerlega: ljós kemur í gegn, sjónlínur opnast.</p>
+        <p data-lang="da">Efter beklædningen installerede vi glasrækværket på balkonen — og under den proces besluttede vi at udvide det til trapperne. Det var det rigtige valg. Glas ændrer rummet fuldstændigt: lys kommer igennem, sigtelinjer åbner sig op.</p>
       </div>
       <div class="proj-overlay-meta">
         <div class="proj-meta-item">
@@ -883,18 +636,21 @@
     <div class="proj-overlay-body">
       <div class="proj-overlay-story">
         <h3 data-lang="en">The Project</h3><h3 data-lang="is">Um verkefnið</h3><h3 data-lang="da">Om projektet</h3>
+        <p data-lang="en">This property had been divided into two separate rental units. Our mandate was to reintegrate the spaces into a cohesive, high-end single-family home, starting from a total strip-out.</p>
+        <p data-lang="is">Þessu húsi hafði verið skipt upp í tvær leigueiningar. Verkefni okkar var að sameina rýmin aftur í vandað einbýlishús og hófst vinna á því að rífa allt út.</p>
+        <p data-lang="da">Denne ejendom var opdelt i to lejligheder. Vores opgave var at sammenlægge dem til én eksklusiv bolig, hvilket krævede en total rydning af huset.</p>
 
-        <p data-lang="en">This property had been divided into two separate rental units. The mandate was to reintegrate the spaces into a cohesive, high-end single-family home, starting from a total strip-out.</p>
-        <p data-lang="is">Þessu húsi hafði verið skipt upp í tvær leigueiningar. Verkefnið var að sameina rýmin aftur í vandað einbýlishús og hófst vinna á því að rífa allt út.</p>
-        <p data-lang="da">Denne ejendom var opdelt i to lejligheder. Opgaven var at sammenlægge dem til én eksklusiv bolig, hvilket krævede en total rydning.</p>
+        <p data-lang="en">After stripping the interior back to the structure, we reconfigured the entire layout — removing the apartment divisions and dismantling all outdated electrical and plumbing systems to create a blank canvas.</p>
+        <p data-lang="is">Eftir að hafa rifið allt út skipulögðum við rýmið upp á nýtt. Við fjarlægðum milliveggi og tókum út öll lagnakerfi til að byrja með hreint borð.</p>
+        <p data-lang="da">Efter at have strippet huset til de bærende vægge ændrede vi hele planløsningen — fjernede opdelingen og alle gamle installationer for at starte forfra.</p>
 
-        <p data-lang="en">After stripping the interior back to the structure, I reconfigured the entire layout — removing the apartment divisions and dismantling all outdated electrical and plumbing systems to create a blank canvas.</p>
-        <p data-lang="is">Eftir að hafa rifið allt út skipulagði ég rýmið upp á nýtt. Milliverggir voru fjarlægðir og öll lagnakerfi tekin út til að byrja með hreint borð.</p>
-        <p data-lang="da">Efter at have strippet huset til de bærende vægge ændrede jeg hele planløsningen — fjernede opdelingen og alle gamle installationer for at starte forfra.</p>
+        <p data-lang="en">We installed underfloor heating throughout and built custom stairs to link the levels. The project covered new electrical wiring, drywall framing, professional plastering, and high-quality painting across all surfaces — all in close collaboration with an interior designer.</p>
+        <p data-lang="is">Við lögðum gólfhita í allt húsið og smíðuðum nýjan stiga. Verkið náði yfir raflagnir, gifsveggi, múrun og vandaða málningarvinnu á öllum flötum — í nánu samstarfi við innanhúshönnuð.</p>
+        <p data-lang="da">Vi lagde gulvvarme i hele huset og byggede en ny trappe. Projektet dækkede el, gipsvægge, pudsning og malerarbejde — tæt sammenarbejde med en indretningsarkitekt.</p>
 
-        <p data-lang="en">I installed underfloor heating throughout and built custom stairs to link the levels. The project covered new electrical wiring, drywall framing, professional plastering, and high-quality painting across all surfaces — all in close collaboration with an interior designer.</p>
-        <p data-lang="is">Ég lagði gólfhita í allt húsið og smíðaði nýjan stiga. Verkið náði yfir raflagnir, gifsveggi, múrun og vandaða málningarvinnu á öllum flötum — í nánu samstarfi við innanhúshönnuð.</p>
-        <p data-lang="da">Jeg lagde gulvvarme i hele huset og byggede en ny trappe. Projektet dækkede el, gipsvægge, pudsning og malerarbejde — tæt sammenarbejde med en indretningsarkitekt.</p>
+        <p data-lang="en">Working alongside an interior designer, we ensured that every finish met a high standard. The result is a modern, unified home with no evidence of its previous multi-unit configuration.</p>
+        <p data-lang="is">Í samstarfi við innanhúshönnuð tryggðum við að hvert smáatriði væri til fyrirmyndar. Útkoman er nútímalegt heimili þar sem hvergi sér móta fyrir fyrra skipulagi.</p>
+        <p data-lang="da">I samarbejde med en indretningsarkitekt sikrede vi, at alle detaljer var i top. Resultatet er et moderne hjem, hvor der ikke er spor af den tidligere lejlighedsopdeling.</p>
       </div>
       <div class="proj-overlay-meta">
         <div class="proj-meta-item">
@@ -910,6 +666,12 @@
           <span data-lang="en">Full strip-out · New electrical · Underfloor heating · Custom stairs · Drywall &amp; framing · Plastering · Painting · Doors &amp; fit-out</span>
           <span data-lang="is">Heildarrif · Nýjar raflagnir · Gólfhiti · Sérsmíðaður stigi · Gifsveggir · Múrun · Málun · Hurðir &amp; innréttingar</span>
           <span data-lang="da">Total rydning · Ny el · Gulvvarme · Ny trappe · Gips &amp; tømrerarbejde · Pudsning · Maling · Døre &amp; aptering</span>
+        </div>
+        <div class="proj-meta-item">
+          <strong data-lang="en">Collaborators</strong><strong data-lang="is">Samstarfsaðilar</strong><strong data-lang="da">Samarbejdspartnere</strong>
+          <span data-lang="en">Interior Designer · Electrician · Plumber</span>
+          <span data-lang="is">Innanhúshönnuður · Rafvirki · Pípulagningamaður</span>
+          <span data-lang="da">Indretningsarkitekt · Elektriker · VVS-installatør</span>
         </div>
         <div class="proj-meta-item">
           <strong data-lang="en">Tags</strong><strong data-lang="is">Flokkar</strong><strong data-lang="da">Tags</strong>
@@ -955,14 +717,17 @@
     <div class="proj-overlay-body">
       <div class="proj-overlay-story">
         <h3 data-lang="en">The Project</h3><h3 data-lang="is">Um verkefnið</h3><h3 data-lang="da">Om projektet</h3>
-
         <p data-lang="en">Full exterior cladding on a residential house in Kópavogur — dark corrugated aluminium installed in winter 2018. The frame goes up first, then insulation is fitted between, and finally the cladding goes on — every panel tight, level and square.</p>
         <p data-lang="is">Heildar álklæðning á íbúðarhúsi í Kópavogi. Dökk smábára sett upp af nákvæmni í krefjandi vetraraðstæðum. Grindin fer upp fyrst, svo er einangrað og að lokum er klæðningin sett á — þétt og rétt.</p>
         <p data-lang="da">Fuld udvendig beklædning på et parcelhus i Kópavogur — mørkt bølgeblik aluminium monteret i vinteren 2018. Rammen sættes op først, derefter monteres isolering, og endelig monteres beklædningen — hvert panel stramt, vandret og i vatter.</p>
 
-        <p data-lang="en">Dark smábára is one of the most popular choices in Reykjavík right now, and it's easy to see why. It looks sharp, it's completely weatherproof, and once it's on it needs nothing from you. In many ways it's the classic Icelandic exterior — as much a part of the Reykjavík streetscape as colourful plaster houses are to Rome.</p>
-        <p data-lang="is">Dökk smábára er eitt af vinsælustu valkostunum í Reykjavík í dag. Hún lítur vel út, er fullkomlega veðurþétt og krefst einskis viðhalds. Að mörgu leyti er smábára klassíski íslenski útvegurinn — jafn stór hluti af götumyndinni og litrík múrhús eru í Róm.</p>
-        <p data-lang="da">Mørk smábára er et af de mest populære valg i Reykjavík. Det ser skarpt ud, er helt vejrbestandigt, og kræver intet vedligehold. På mange måder er smábára den klassiske islandske facade — ligesom farverige pudsede huse er en del af Roms gadebillede.</p>
+        <p data-lang="en">Dark smábára is one of the most popular choices in Reykjavík right now, and it's easy to see why. It looks sharp, it's completely weatherproof, and once it's on it needs nothing from you. Ever.</p>
+        <p data-lang="is">Dökk smábára er eitt af vinsælustu valkostunum í Reykjavík í dag. Hún lítur vel út, er fullkomlega veðurþétt og krefst einskis viðhalds þegar hún er komin á.</p>
+        <p data-lang="da">Mørk smábára er et af de mest populære valg i Reykjavík. Det ser skarpt ud, er helt vejrbestandigt, og kræver intet vedligehold når det er monteret.</p>
+
+        <p data-lang="en">In many ways smábára is the classic Icelandic exterior — as much a part of the Reykjavík streetscape as colourful plaster houses are to Rome. This project is a good example of why it works.</p>
+        <p data-lang="is">Að mörgu leyti er smábára klassíski íslenski útvegurinn — jafn stór hluti af götumyndinni og litrík múrhús eru í Róm. Þetta verkefni sýnir vel hvers vegna hún kemur svona vel út.</p>
+        <p data-lang="da">På mange måder er smábára den klassiske islandske facade — ligesom farverige pudsede huse er en del af Roms gadebillede. Dette projekt er et godt eksempel på, hvorfor det virker.</p>
       </div>
       <div class="proj-overlay-meta">
         <div class="proj-meta-item">
@@ -984,6 +749,7 @@
           <div class="proj-overlay-tags-list">
             <span class="proj-tag">Aluminium Cladding</span>
             <span class="proj-tag">Smábára</span>
+            <span class="proj-tag" data-lang="en">Residential</span><span class="proj-tag" data-lang="is">Íbúðarhús</span><span class="proj-tag" data-lang="da">Bolig</span>
             <span class="proj-tag" data-lang="en">Winter Work</span><span class="proj-tag" data-lang="is">Vetrarvinna</span><span class="proj-tag" data-lang="da">Vinterarbejde</span>
           </div>
         </div>
@@ -1002,9 +768,9 @@
 <div class="proj-overlay" id="overlay-bathroom">
   <button class="proj-overlay-close" onclick="closeProject()">✕</button>
   <div class="proj-overlay-inner">
-    <p class="proj-overlay-tag" data-lang="en">Residential · Bathroom · Full Renovation</p>
-    <p class="proj-overlay-tag" data-lang="is">Íbúðarhús · Baðherbergi · Heildarendurbætur</p>
-    <p class="proj-overlay-tag" data-lang="da">Bolig · Badeværelse · Komplet Renovering</p>
+    <p class="proj-overlay-tag" data-lang="en">Residential · Bathroom · Full Renovation · 2022</p>
+    <p class="proj-overlay-tag" data-lang="is">Íbúðarhús · Baðherbergi · Heildarendurbætur · 2022</p>
+    <p class="proj-overlay-tag" data-lang="da">Bolig · Badeværelse · Komplet Renovering · 2022</p>
     <h2 class="proj-overlay-title" data-lang="en">Full Bathroom<br>Renovation</h2>
     <h2 class="proj-overlay-title" data-lang="is">Heildarendurbætur<br>á baðherbergi</h2>
     <h2 class="proj-overlay-title" data-lang="da">Komplet<br>badeværelsesrenovering</h2>
@@ -1020,9 +786,7 @@
         preload="metadata"
       ></video>
       <button class="proj-video-play" aria-label="Play timelapse video">
-        <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5 3.5L14.5 9 5 14.5V3.5Z" fill="currentColor"/>
-        </svg>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 3.5L14.5 9 5 14.5V3.5Z" fill="currentColor"/></svg>
       </button>
       <p class="proj-video-caption">
         <span data-lang="en">Timelapse — Full Bathroom Renovation</span>
@@ -1040,6 +804,10 @@
       </div>
       <div class="proj-overlay-meta">
         <div class="proj-meta-item">
+          <strong data-lang="en">Year</strong><strong data-lang="is">Ár</strong><strong data-lang="da">År</strong>
+          <span>2022</span>
+        </div>
+        <div class="proj-meta-item">
           <strong data-lang="en">Scope of Work</strong><strong data-lang="is">Umfang verks</strong><strong data-lang="da">Arbejdsomfang</strong>
           <span data-lang="en">Plumbing · Floor screeding · Structural framing · Tiling</span>
           <span data-lang="is">Pípulagnir · Gólffylling · Burðarvirki · Flísalögn</span>
@@ -1051,6 +819,7 @@
             <span class="proj-tag">Plumbing</span>
             <span class="proj-tag">Tiling</span>
             <span class="proj-tag" data-lang="en">Full Renovation</span><span class="proj-tag" data-lang="is">Heildarendurbætur</span><span class="proj-tag" data-lang="da">Komplet Renovering</span>
+            <span class="proj-tag" data-lang="en">Residential</span><span class="proj-tag" data-lang="is">Íbúðarhús</span><span class="proj-tag" data-lang="da">Bolig</span>
           </div>
         </div>
       </div>
@@ -1075,7 +844,7 @@
   function setLang(lang) {
     document.documentElement.setAttribute('data-active-lang', lang);
     document.querySelectorAll('.lang-btn').forEach(function(btn) {
-      btn.classList.toggle('active', btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'" + lang + "'"));
+      btn.classList.toggle('active', btn.getAttribute('onclick') === "setLang('" + lang + "')");
     });
     localStorage.setItem('ih-lang', lang);
   }
@@ -1083,12 +852,6 @@
   setLang(savedLang);
 
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Ambient timelapse in intro
-  var introTimelapse = document.querySelector('.intro-timelapse');
-  if (introTimelapse && !reducedMotion) {
-    introTimelapse.play().catch(function() {});
-  }
 
   // Project overlays
   function openProject(id) {
@@ -1134,6 +897,11 @@
   // Keyboard
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') { closeProject(); closeLightbox(); }
+  });
+
+  // Hamburger
+  document.getElementById('hamburgerBtn').addEventListener('click', function() {
+    document.getElementById('mobileNav').classList.add('open');
   });
 </script>
 
